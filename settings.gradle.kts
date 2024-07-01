@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "saveWith_android__"
+rootProject.name = "saveWith_android"
 include(":app")
  

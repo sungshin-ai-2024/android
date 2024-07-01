@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.savewith_android__"
+    namespace = "com.example.savewith_android"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.savewith_android__"
+        applicationId = "com.example.savewith_android"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
