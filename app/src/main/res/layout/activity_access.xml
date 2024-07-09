@@ -29,9 +29,9 @@
 
     <ImageView
         android:src="@drawable/box_gray4"
-        android:layout_width="410dp"
+        android:layout_width="412dp"
         android:layout_height="1300dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
