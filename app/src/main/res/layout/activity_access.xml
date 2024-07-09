@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="13dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo_top"
+        android:layout_width="127dp"
+        android:layout_height="35dp"
+        android:src="@drawable/img_logo_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/img_setting_topbar"
+        app:layout_constraintBottom_toBottomOf="@id/logo_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/logo_top" />
+
+    <ImageView
+        android:src="@drawable/box_gray4"
+        android:layout_width="410dp"
+        android:layout_height="1300dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:src="@drawable/box_white2"
+        android:layout_width="335dp"
+        android:layout_height="614dp"
+        android:layout_marginTop="77dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/btn_sub2"
+        android:layout_width="219dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="615dp"
+        android:src="@drawable/box_sub2_bttn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/v1_main"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray4"
+        app:layout_constraintTop_toBottomOf="@id/logo_top" />
+
+    <EditText
+        android:id="@+id/et2_chpass"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="24dp"
+        android:hint="New password"
+        android:textSize="12sp"
+        android:inputType="textPassword"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
