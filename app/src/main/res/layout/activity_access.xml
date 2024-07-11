@@ -45,15 +45,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/btn_sub2"
         android:layout_width="219dp"
         android:layout_height="50dp"
         android:layout_marginTop="615dp"
-        android:src="@drawable/box_sub2_bttn"
+        android:background="@drawable/box_sub2_bttn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="접근 권한 확인 버튼"/>
 
     <View
         android:id="@+id/v1_main"

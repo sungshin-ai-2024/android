@@ -18,24 +18,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/login1_btn_yellow"
         android:layout_width="335dp"
         android:layout_height="50dp"
         android:layout_marginTop="495dp"
-        android:src="@drawable/box_yellow"
+        android:background="@drawable/box_yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="카카오 로그인 버튼"/>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/login1_btn_gray3"
         android:layout_width="335dp"
         android:layout_height="50dp"
         android:layout_marginTop="557dp"
-        android:src="@drawable/box_gray3_bttn"
+        android:background="@drawable/box_gray3_bttn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="구글 로그인 버튼"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

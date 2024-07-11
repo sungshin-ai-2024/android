@@ -18,34 +18,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/login2_btn_sub2"
         android:layout_width="335dp"
         android:layout_height="50dp"
         android:layout_marginTop="482dp"
-        android:src="@drawable/box_sub2_bttn"
+        android:background="@drawable/box_sub2_bttn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="로그인 버튼"/>
 
-    <View
-        android:id="@+id/logo2_id"
+    <EditText
+        android:id="@+id/login2_id"
         android:layout_width="335dp"
-        android:layout_height="1dp"
+        android:layout_height="30dp"
         android:layout_marginTop="343dp"
-        android:background="@color/gray3"
+        android:text="아이디"
+        android:textSize="16dp"
+        android:fontFamily="@font/suit_semibold"
+        android:textColor="@color/gray2"
+        android:layout_gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="로그인 텍스트"/>
 
-    <View
-        android:id="@+id/logo2_pw"
+    <EditText
+        android:id="@+id/login2_pw"
         android:layout_width="335dp"
         android:layout_height="1dp"
         android:layout_marginTop="396dp"
         android:background="@color/gray3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="비밀번호 텍스트"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
