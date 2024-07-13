@@ -17,24 +17,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/btn_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/img_setting_topbar"
-        app:layout_constraintBottom_toBottomOf="@id/logo_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/logo_top" />
+    <View
+        android:id="@+id/v1_main"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray4"
+        app:layout_constraintTop_toBottomOf="@id/logo_top" />
 
     <ImageView
         android:src="@drawable/box_gray4"
-        android:layout_width="412dp"
-        android:layout_height="1300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
 
     <ImageView
         android:src="@drawable/box_white2"
@@ -55,14 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="접근 권한 확인 버튼"/>
-
-    <View
-        android:id="@+id/v1_main"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="13dp"
-        android:background="@color/gray4"
-        app:layout_constraintTop_toBottomOf="@id/logo_top" />
 
     <EditText
         android:id="@+id/et2_chpass"
