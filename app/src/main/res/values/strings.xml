@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">saveWith_android</string>
+    <string-array name="medicine_cycles">
+        <item>매일</item>
+        <item>매주</item>
+        <item>격일</item>
+    </string-array>
+    <string-array name="choose_sex">
+        <item>남성</item>
+        <item>여성</item>
+    </string-array>
 </resources>

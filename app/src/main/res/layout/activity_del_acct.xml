@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/left"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/img_left"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="뒤로 가기"/>
+
+    <TextView
+        android:id="@+id/txt_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/suit_bold"
+        android:text="세이브위드 탈퇴"
+        android:textColor="@color/font"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/v1_main"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/left"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/con_layout"
+        android:layout_width="match_parent"
+        android:layout_height="621dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/v1_main">
+        <TextView
+            android:id="@+id/txt_acct1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:fontFamily="@font/suit_bold"
+            android:text="탈퇴 안내 및 유의사항"
+            android:textColor="@color/font"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/con_layout"
+            app:layout_constraintTop_toTopOf="@id/con_layout"/>
+
+        <ImageView
+            android:id="@+id/box_white"
+            android:background="@drawable/box_gray5"
+            android:layout_width="match_parent"
+            android:layout_height="441dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_acct1"/>
+
+        <CheckBox
+            android:id="@+id/cb_medicine"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/check_selector"
+            android:button="@null"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/box_white"
+            app:layout_constraintStart_toStartOf="@id/box_white"/>
+        <TextView
+            android:id="@+id/ck_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text=" 안내사항을 확인했으며 이에 동의합니다."
+            android:textColor="@color/gray1"
+            android:textSize="14sp"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="@id/cb_medicine"
+            app:layout_constraintStart_toEndOf="@id/cb_medicine"
+            app:layout_constraintBottom_toBottomOf="@id/cb_medicine"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="21dp"
+            android:layout_marginTop="21dp"
+            app:layout_constraintTop_toTopOf="@id/box_white"
+            app:layout_constraintHorizontal_bias="1.0">
+
+            <TextView
+                android:id="@+id/some_id"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/suit_medium"
+                android:text="세이브위드 서비스를 탈퇴하려면 세이브위드 탈퇴 버튼을 누르세요. 탈퇴할 경우 귀하가 사용했던 모든 서비스나 기능을 포함하여 세이브위드 사용이 불가능합니다.\n\n세이브위드와 데이터 연동된 타사 서비스나 기능을 이용하고 있는 경우 서비스 및 데이터 처리는 해당 업체를 통해 처리되므로 해당 업체에 확인해 보십시오.\n\n세이브위드에 다시 가입하여 사용하더라도 서비스나 기능은 재가입해야 합니다.\n\n추가로 세이브위드의 모든 데이터는 귀하의 폰과 세이브위드 서버에서 삭제됩니다. 단, 관계 법령에 따라 일부 데이터는 해당 보유 기간이 만료될 때까지 보존될 수 있습니다."
+                android:textColor="@color/font"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageButton
+            android:id="@+id/signup_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="84dp"
+            android:background="@drawable/box_sub2_bttn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="탈퇴 버튼"/>
+        <TextView
+            android:id="@+id/txt_signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text="세이브위드 탈퇴"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/signup_btn"
+            app:layout_constraintEnd_toEndOf="@id/signup_btn"
+            app:layout_constraintTop_toTopOf="@id/signup_btn"
+            app:layout_constraintBottom_toBottomOf="@id/signup_btn"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
