@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sett_box1"
@@ -59,5 +58,14 @@
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/sett1_user_box"
             app:layout_constraintTop_toBottomOf="@id/sett1_box1_phone_v"/>
+
+        <ImageButton
+            android:id="@+id/ic_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="290dp"
+            android:background="@drawable/img_dot_vertical"
+            app:layout_constraintStart_toEndOf="@id/sett1_user_box"
+            app:layout_constraintTop_toTopOf="@id/sett1_box1_phone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

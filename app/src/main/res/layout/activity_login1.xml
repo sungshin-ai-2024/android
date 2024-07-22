@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="180dp"
-    tools:context=".MainActivity">
+    android:id="@+id/main"
+    tools:context=".Login1Activity">
 
     <ImageView
         android:id="@+id/login1_logo"

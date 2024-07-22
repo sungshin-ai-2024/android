@@ -214,13 +214,13 @@
                         android:id="@+id/recycler_view_device"
                         android:layout_width="0dp"
                         android:layout_height="340dp"
-                        android:layout_marginTop="0dp"
                         android:background="@drawable/box_gray5"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:padding="12dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:padding="16dp"
-                        tools:listitem="@layout/item_device"/>
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_device" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
