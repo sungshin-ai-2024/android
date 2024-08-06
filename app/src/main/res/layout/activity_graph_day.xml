@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="13dp"
+    android:id="@+id/graph_day">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/font"
+        android:text="하루 총합 그래프"
+        android:fontFamily="@font/suit_bold"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/v1_graph_day"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray4"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/v1_graph_day"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="37dp"
+        android:background="#EFF6FF"
+        android:paddingHorizontal="19dp">
+
+        <ImageView
+            android:id="@+id/graph_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_leftriangle_main"
+            app:layout_constraintEnd_toStartOf="@id/graph_date"
+            app:layout_constraintTop_toTopOf="@id/graph_date"
+            app:layout_constraintBottom_toBottomOf="@id/graph_date"
+            android:layout_marginEnd="11dp"/>
+
+        <TextView
+            android:id="@+id/graph_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024. 06. 07"
+            android:fontFamily="@font/suit_semibold"
+            android:textSize="18sp"
+            android:textColor="@color/font"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+        <ImageView
+            android:id="@+id/graph_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_rightriangle_main"
+            app:layout_constraintStart_toEndOf="@+id/graph_date"
+            app:layout_constraintTop_toTopOf="@id/graph_date"
+            app:layout_constraintBottom_toBottomOf="@id/graph_date"
+            android:layout_marginStart="11dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/graph_all_day"
+            android:layout_width="match_parent"
+            android:layout_height="218dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/graph_right"
+            android:layout_marginTop="15dp"
+            tools:listitem="@layout/item_chart"/>
+
+        <TextView
+            android:id="@+id/tv_state_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/graph_all_day"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="최근행동"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/suit_semibold"
+            android:textSize="16sp"
+            android:textColor="@color/font"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/graph_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tv_state_title"
+            android:layout_marginTop="18dp"
+            tools:listitem="@layout/item_state_day"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
