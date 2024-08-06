@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".AddGuardActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -135,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/box_sub2"
-                    android:text="관계"
+                    android:text="사용자와의 관계"
                     android:textSize="16dp"
                     android:fontFamily="@font/suit_semibold"
                     android:textColor="@color/gray2"

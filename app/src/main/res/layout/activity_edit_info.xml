@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".EditInfoActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -343,6 +343,16 @@
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/profl_box4_birth"
                         app:layout_constraintTop_toBottomOf="@id/profl_txt_birth"/>
+                    <ImageButton
+                        android:id="@+id/birth_btn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/img_calaneder_settings"
+                        app:layout_constraintEnd_toEndOf="@id/box_birth"
+                        app:layout_constraintTop_toTopOf="@id/box_birth"
+                        app:layout_constraintBottom_toBottomOf="@id/box_birth"
+                        android:contentDescription="캘린더 버튼"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -361,12 +371,13 @@
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/profl_box5_sex"/>
-                    <TextView
+                    <Spinner
                         android:id="@+id/box_sex"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/box_sub2"
                         android:layout_marginTop="6dp"
+                        android:entries="@array/choose_gender"
                         android:fontFamily="@font/suit_semibold"
                         android:text="여"
                         android:textColor="@color/font"

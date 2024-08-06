@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".AppPermissionActivity">
     <ImageButton
         android:id="@+id/left"
         android:layout_width="24dp"
@@ -86,7 +86,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/sett_box4"/>
                 <Switch
-                    android:id="@+id/swch_sensitive_info"
+                    android:id="@+id/swch_location"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     app:layout_constraintTop_toTopOf="@id/sett_txt_logout"

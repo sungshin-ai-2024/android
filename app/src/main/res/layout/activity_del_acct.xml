@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".DelAcctActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -72,11 +72,12 @@
             app:layout_constraintTop_toBottomOf="@id/txt_acct1"/>
 
         <CheckBox
-            android:id="@+id/cb_medicine"
+            android:id="@+id/cb_del_acct"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:background="@drawable/check_selector"
-            android:button="@null"
+            android:button="@android:color/transparent"
+            android:checked="false"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="18dp"
             android:gravity="center_vertical"
@@ -92,9 +93,9 @@
             android:textSize="14sp"
             android:layout_marginStart="12dp"
             android:gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="@id/cb_medicine"
-            app:layout_constraintStart_toEndOf="@id/cb_medicine"
-            app:layout_constraintBottom_toBottomOf="@id/cb_medicine"/>
+            app:layout_constraintTop_toTopOf="@id/cb_del_acct"
+            app:layout_constraintStart_toEndOf="@id/cb_del_acct"
+            app:layout_constraintBottom_toBottomOf="@id/cb_del_acct"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/con_layout1"
@@ -123,7 +124,7 @@
 
 
         <ImageButton
-            android:id="@+id/signup_btn"
+            android:id="@+id/del_acct_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="84dp"
@@ -141,10 +142,10 @@
             android:text="세이브위드 탈퇴"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/signup_btn"
-            app:layout_constraintEnd_toEndOf="@id/signup_btn"
-            app:layout_constraintTop_toTopOf="@id/signup_btn"
-            app:layout_constraintBottom_toBottomOf="@id/signup_btn"/>
+            app:layout_constraintStart_toStartOf="@id/del_acct_btn"
+            app:layout_constraintEnd_toEndOf="@id/del_acct_btn"
+            app:layout_constraintTop_toTopOf="@id/del_acct_btn"
+            app:layout_constraintBottom_toBottomOf="@id/del_acct_btn"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

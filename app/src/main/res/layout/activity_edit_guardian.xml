@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".EditGuardActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -150,10 +150,11 @@
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profl_box2_id"/>
-                <EditText
-                    android:id="@+id/box_id"
+                <Spinner
+                    android:id="@+id/spinner_relationship"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:entries="@array/relationship_array"
                     android:background="@drawable/box_sub2"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/suit_semibold"

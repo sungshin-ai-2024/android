@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".EditPhoneActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -96,7 +96,7 @@
                     android:layout_marginStart="9dp"
                     android:background="@drawable/box_sub2"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="휴대폰번호를 입력해주세요."
+                    android:text="휴대폰 번호를 입력해주세요."
                     android:textColor="@color/gray2"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"

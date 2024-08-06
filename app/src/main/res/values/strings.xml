@@ -5,7 +5,7 @@
         <item>매주</item>
         <item>격일</item>
     </string-array>
-    <string-array name="choose_sex">
+    <string-array name="choose_gender">
         <item>남성</item>
         <item>여성</item>
     </string-array>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".CngPwdActivity">
 
     <ImageButton
         android:id="@+id/left"
@@ -70,7 +70,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/box_sub2"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="기존 비밀번호"
+                    android:text="현재 비밀번호"
                     android:textColor="@color/gray2"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
