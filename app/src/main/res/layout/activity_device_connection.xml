@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    tools:context=".DeviceConnActivity">
+    <ImageButton
+        android:id="@+id/left"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/img_left"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="뒤로 가기"/>
+    <TextView
+        android:id="@+id/txt_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/suit_bold"
+        android:text="기기 연결"
+        android:textColor="@color/font"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <View
+        android:id="@+id/v1_main"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/left"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/con_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="621dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/v1_main"
+        app:layout_constraintHorizontal_bias="1.0">
+        <ImageButton
+            android:id="@+id/add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/box_sub2_bttn"
+            app:layout_constraintEnd_toEndOf="@id/con_layout1"
+            app:layout_constraintStart_toStartOf="@id/con_layout1"
+            app:layout_constraintBottom_toBottomOf="@id/con_layout1"
+            android:contentDescription="새 기기 추가 버튼"/>
+        <TextView
+            android:id="@+id/txt_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text="새 기기 추가"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/add_btn"
+            app:layout_constraintEnd_toEndOf="@id/add_btn"
+            app:layout_constraintStart_toStartOf="@id/add_btn"
+            app:layout_constraintTop_toTopOf="@id/add_btn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v1_main"
+        app:layout_constraintVertical_bias="0.0"
+        android:background="F5F5F5"
+        android:contentDescription="설정 스크롤">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/v1_main">
+
+            <TextView
+                android:id="@+id/txt_this_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/suit_semibold"
+                android:text="이 기기"
+                android:textColor="@color/font"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/con_layout"/>
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/txt_this_device"
+                app:layout_constraintStart_toStartOf="@id/con_layout"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sett_box1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/box_gray5"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/sett1_user_box"
+                        android:layout_width="27dp"
+                        android:layout_height="47dp"
+                        android:background="@drawable/img_phone"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="프로필 사진 박스"/>
+                    <TextView
+                        android:id="@+id/sett1_box1_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/suit_semibold"
+                        android:layout_marginStart="27dp"
+                        android:text="수정의 S22"
+                        android:textColor="@color/font"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/sett1_user_box"
+                        app:layout_constraintTop_toTopOf="@id/sett_box1"/>
+                    <TextView
+                        android:id="@+id/sett1_box1_phone_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/suit_medium"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginTop="3dp"
+                        android:text="Galaxy S22"
+                        android:textColor="@color/gray2"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/sett1_user_box"
+                        app:layout_constraintTop_toBottomOf="@id/sett1_box1_phone"/>
+
+                    <TextView
+                        android:id="@+id/sett1_box1_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/suit_medium"
+                        android:layout_marginStart="27dp"
+                        android:layout_marginTop="3dp"
+                        android:text="2022. 07. 26. 오후 11:41. 대한민국"
+                        android:textColor="@color/gray2"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/sett1_user_box"
+                        app:layout_constraintTop_toBottomOf="@id/sett1_box1_phone_v"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_recent_login_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/suit_semibold"
+                android:text="최근 로그인 정보"
+                android:textColor="@color/font"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear1"/>
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recycler_view_device"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="340dp"-->
+<!--                android:layout_marginTop="12dp"-->
+<!--                android:background="@drawable/box_gray5"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/txt_recent_login_info"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                android:padding="16dp"-->
+<!--                tools:listitem="@layout/item_device"/>-->
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/txt_recent_login_info"
+                app:layout_constraintStart_toStartOf="@id/con_layout"
+                android:layout_marginTop="12dp"
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/con_layout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_device"
+                        android:layout_width="0dp"
+                        android:layout_height="340dp"
+                        android:background="@drawable/box_gray5"
+                        android:padding="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_device" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
