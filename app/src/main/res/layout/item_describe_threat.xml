@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="info"
+            type="com.example.savewith_android.ThreatLogInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/item_describe_threat">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{info.timestamp.toString()}"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="16sp"
+            android:textColor="@color/font"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_situation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위험상황"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="16sp"
+            android:textColor="@color/font"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_time"
+            android:layout_marginStart="31dp" />
+
+        <TextView
+            android:id="@+id/tv_situation_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{info.count}"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="16sp"
+            android:textColor="@color/font"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_situation"
+            android:layout_marginStart="4dp" />
+
+        <TextView
+            android:id="@+id/tv2_situation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="건"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="16sp"
+            android:textColor="@color/font"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_situation_count"
+            android:layout_marginStart="2dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
