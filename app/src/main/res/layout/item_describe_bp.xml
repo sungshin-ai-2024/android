@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="info"
+            type="com.example.savewith_android.BloodPressureInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/item_describe_bp">
+
+        <TextView
+            android:id="@+id/tv_sys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:text="수축기: "
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_sys_score_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_sys"
+            android:text="@{info.minSystolic}"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_sys_score_min"
+            android:text="~"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_sys_score_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv2"
+            android:text="@{info.maxSystolic}"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_dia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sys"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:text="이완기: "
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_dia_score_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sys"
+            app:layout_constraintStart_toEndOf="@+id/tv_dia"
+            android:text="@{info.minDiastolic}"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sys"
+            app:layout_constraintStart_toEndOf="@+id/tv_dia_score_min"
+            android:text="~"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_dia_score_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sys"
+            app:layout_constraintStart_toEndOf="@+id/tv3"
+            android:text="@{info.maxDiastolic}"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+
+        <TextView
+            android:id="@+id/tv_time1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dia"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:text="@{info.startTime.toString()}"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dia"
+            app:layout_constraintStart_toEndOf="@+id/tv_time1"
+            android:layout_marginStart="6dp"
+            android:text="~"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <TextView
+            android:id="@+id/tv_time2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dia"
+            app:layout_constraintStart_toEndOf="@+id/tv_w"
+            android:layout_marginStart="6dp"
+            android:text="@{info.endTime.toString()}"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/suit_regular"
+            android:textSize="15sp"
+            android:textColor="@color/font" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time2"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/gray2"
+            android:layout_marginTop="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

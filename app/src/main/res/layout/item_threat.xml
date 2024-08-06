@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="info"
+            type="com.example.savewith_android.ThreatCountInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_white_all"
+        android:elevation="2dp"
+        android:paddingBottom="28dp"
+        android:paddingTop="28dp">
+
+        <TextView
+            android:id="@+id/tv_fall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text="낙상"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="32dp" />
+
+        <TextView
+            android:id="@+id/tv_wrongway"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text="경로이탈"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/tv_fall"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_threat_situation"
+            android:layout_marginStart="68dp" />
+
+        <TextView
+            android:id="@+id/tv_threat_situation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:text="위험상황"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            android:layout_marginStart="54dp"
+            android:layout_marginEnd="17dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_wrongway"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_fall_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="@{info.count}"
+            android:textColor="@color/font"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_fall"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fall" />
+
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="건"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_fall_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fall" />
+
+        <TextView
+            android:id="@+id/tv_wrongway_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="@{info.count}"
+            android:textColor="@color/font"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_wrongway"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wrongway"
+            android:layout_marginStart="13dp" />
+
+        <TextView
+            android:id="@+id/tv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="건"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_wrongway_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_wrongway" />
+
+        <TextView
+            android:id="@+id/tv_threat_situation_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="@{info.count}"
+            android:textColor="@color/font"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_threat_situation"
+            app:layout_constraintTop_toBottomOf="@+id/tv_threat_situation"
+            android:layout_marginStart="13dp" />
+
+        <TextView
+            android:id="@+id/tv7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:fontFamily="@font/suit_semibold"
+            android:text="건"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_threat_situation_count"
+            app:layout_constraintTop_toBottomOf="@+id/tv_threat_situation" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

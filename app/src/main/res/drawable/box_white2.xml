@@ -5,5 +5,4 @@
     <solid android:color="@color/white" />
     <padding android:bottom="15dp" android:left="22dp"
         android:right="22dp" android:top="15dp"/>
-
 </shape>
