@@ -84,3 +84,43 @@ data class ApiResponse(
     val success: Boolean,
     val message: String
 )
+
+//data class LoginRequest(
+//    val signup_id: String,
+//    val password: String)
+//
+//data class LoginResponse(
+//    val token: String,
+//    val userName: String,
+//    val userPhone: String
+//)
+
+//data class SignUpResponse(
+//    val user: User,
+//    val token: String)
+
+//data class ProfileResponse(
+//    val signup_id: String,
+//    val profile: Profile
+//)
+
+data class Profile(
+    val signup_name: String,
+    val phone_number: String,
+    val birth_date: String,
+    val sex: String,
+    val zipcode: String,
+    val address: String,
+    val detailed_address: String
+)
+
+data class User(
+    val id: Int,
+    val signup_id: String,
+    val signup_name: String,
+    val phone_number: String,
+    val birth_date: String,
+    val sex: String,
+    val address: String,
+    val detailed_address: String
+) // 유저 structure
