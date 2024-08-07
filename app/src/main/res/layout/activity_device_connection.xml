@@ -39,36 +39,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/left"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/con_layout1"
-        android:layout_width="match_parent"
-        android:layout_height="621dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/v1_main"
-        app:layout_constraintHorizontal_bias="1.0">
-        <ImageButton
-            android:id="@+id/add_btn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/box_sub2_bttn"
-            app:layout_constraintEnd_toEndOf="@id/con_layout1"
-            app:layout_constraintStart_toStartOf="@id/con_layout1"
-            app:layout_constraintBottom_toBottomOf="@id/con_layout1"
-            android:contentDescription="새 기기 추가 버튼"/>
-        <TextView
-            android:id="@+id/txt_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/suit_semibold"
-            android:text="새 기기 추가"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/add_btn"
-            app:layout_constraintEnd_toEndOf="@id/add_btn"
-            app:layout_constraintStart_toStartOf="@id/add_btn"
-            app:layout_constraintTop_toTopOf="@id/add_btn" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/con_layout1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="621dp"-->
+<!--        android:layout_marginHorizontal="20dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/v1_main"-->
+<!--        app:layout_constraintHorizontal_bias="1.0">-->
+<!--        -->
+<!--        <ImageButton-->
+<!--            android:id="@+id/add_btn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="@drawable/box_sub2_bttn"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/con_layout1"-->
+<!--            app:layout_constraintStart_toStartOf="@id/con_layout1"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/con_layout1"-->
+<!--            android:contentDescription="새 기기 추가 버튼"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/txt_add_btn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/suit_semibold"-->
+<!--            android:text="새 기기 추가"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/add_btn"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/add_btn"-->
+<!--            app:layout_constraintStart_toStartOf="@id/add_btn"-->
+<!--            app:layout_constraintTop_toTopOf="@id/add_btn" />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -81,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/v1_main"
         app:layout_constraintVertical_bias="0.0"
-        android:background="F5F5F5"
+        android:background="#FFFFFF"
         android:contentDescription="설정 스크롤">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,18 +184,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/linear1"/>
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recycler_view_device"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="340dp"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:background="@drawable/box_gray5"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/txt_recent_login_info"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                android:padding="16dp"-->
-<!--                tools:listitem="@layout/item_device"/>-->
-
             <LinearLayout
                 android:id="@+id/linear2"
                 android:layout_width="match_parent"
@@ -224,6 +213,31 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/add_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/box_sub2_bttn"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="72dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="새 기기 추가 버튼"/>
+            <TextView
+                android:id="@+id/txt_add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/suit_semibold"
+                android:text="새 기기 추가"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/add_btn"
+                app:layout_constraintEnd_toEndOf="@id/add_btn"
+                app:layout_constraintStart_toStartOf="@id/add_btn"
+                app:layout_constraintTop_toTopOf="@id/add_btn" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

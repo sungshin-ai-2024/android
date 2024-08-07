@@ -1,20 +1,21 @@
 package com.example.savewith_android
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.savewith_android.databinding.ActivityEditPhonenumBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class EditPhoneActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditPhonenumBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_edit_phonenum)
 
         binding = ActivityEditPhonenumBinding.inflate(layoutInflater)
@@ -28,17 +29,90 @@ class EditPhoneActivity : AppCompatActivity() {
         binding.certifBtn.setOnClickListener {
             val phoneNum = binding.boxPhoneNum.text.toString()
             if(phoneNum.isNotEmpty()){
-                // 해당 번호로 인증번호 보내는 코드
+                sendVerificationCode(phoneNum)
+            } else {
+                Toast.makeText(this, "전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
         binding.editNumBtn.setOnClickListener {
             val certifNum = binding.boxCertificationNum.text.toString()
-            if(certifNum.isNotEmpty()){
-                // 인증번호가 일치하는 지 확인하는 코드
-                // 데베 API 호출 및 번호 수정
-                Toast.makeText(this, "휴대폰 번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+            if (certifNum.isNotEmpty()) {
+                verifyCode(certifNum)
+            } else {
+                Toast.makeText(this, "인증번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
+    }
+    private fun sendVerificationCode(phoneNum: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response: Response<Void> = RetrofitClient.apiService.sendVerificationCode(PhoneNumberRequest(phoneNum))
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        Toast.makeText(this@EditPhoneActivity, "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@EditPhoneActivity, "인증번호 전송 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@EditPhoneActivity, "오류 발생: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun verifyCode(certifNum: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val token = getAuthToken() ?: return@launch
+                val response: Response<Void> = RetrofitClient.apiService.verifyCode("Bearer $token", VerificationCodeRequest(certifNum))
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        updatePhoneNumber()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@EditPhoneActivity, "인증번호 검증 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@EditPhoneActivity, "오류 발생: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun updatePhoneNumber() {
+        val newPhoneNum = binding.boxPhoneNum.text.toString()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val token = getAuthToken() ?: return@launch
+                val response: Response<Void> = RetrofitClient.apiService.updatePhoneNumber("Bearer $token", PhoneNumberRequest(newPhoneNum))
+                if (response.isSuccessful) {
+                    runOnUiThread {
+                        Toast.makeText(this@EditPhoneActivity, "휴대폰 번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish() // 업데이트 후 액티비티 종료
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@EditPhoneActivity, "휴대폰 번호 변경 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@EditPhoneActivity, "오류 발생: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun getAuthToken(): String? {
+        val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        return sharedPreferences.getString("auth_token", null)
     }
 }

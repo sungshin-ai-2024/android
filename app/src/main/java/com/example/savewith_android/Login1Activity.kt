@@ -7,14 +7,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.savewith_android.databinding.ActivityLogin1Binding
 
 class Login1Activity : AppCompatActivity() {
     private lateinit var binding: ActivityLogin1Binding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login1)
 
         binding = ActivityLogin1Binding.inflate(layoutInflater)

@@ -1,9 +1,11 @@
 package com.example.savewith_android
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,9 +13,10 @@ import com.example.savewith_android.databinding.ActivityNotificationSettingsBind
 
 class NotifSettActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationSettingsBinding
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_notification_settings)
 
         binding = ActivityNotificationSettingsBinding.inflate(layoutInflater)

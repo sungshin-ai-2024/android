@@ -9,11 +9,14 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.Spinner
 import java.util.Calendar
 import android.app.DatePickerDialog
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.savewith_android.databinding.ActivitySignupBinding
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

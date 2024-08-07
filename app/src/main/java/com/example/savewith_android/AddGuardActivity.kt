@@ -1,9 +1,11 @@
 package com.example.savewith_android
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,9 +14,9 @@ import com.example.savewith_android.databinding.ActivityAddGuardianBinding
 class AddGuardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddGuardianBinding
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_add_guardian)
 
         binding = ActivityAddGuardianBinding.inflate(layoutInflater)
@@ -33,7 +35,8 @@ class AddGuardActivity : AppCompatActivity() {
             val userRelationship = binding.spinnerRelationship.selectedItem.toString()
 
             if (userName.isNotEmpty() && userPhoneNumber.isNotEmpty() && userRelationship.isNotEmpty()) {
-//                addGuard(userName, userPhoneNumber, userRelationship) // 데베에 보호자 추가하는 함수 추가
+                // + threatActivity에도 정보를 보내주는 기능 구현 필요
+                // addGuard(userName, userPhoneNumber, userRelationship) // 데베에 보호자 추가하는 함수 추가
                 Toast.makeText(this, "보호자가 추가되었습니다.", Toast.LENGTH_SHORT).show()
 
 //                val intent = Intent(this, MainActivity::class.java)

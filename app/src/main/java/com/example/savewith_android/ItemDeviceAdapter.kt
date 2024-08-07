@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savewith_android.databinding.ItemDeviceBinding
 
-class ItemDeviceAdapter(private val devices: List<ItemDevice>) : RecyclerView.Adapter<ItemDeviceAdapter.ItemDeviceViewHolder>() {
-    class ItemDeviceViewHolder(private val binding: ItemDeviceBinding) : RecyclerView.ViewHolder(binding.root) {
+class ItemDeviceAdapter(private var devices: List<ItemDevice>) : RecyclerView.Adapter<ItemDeviceAdapter.ItemDeviceViewHolder>() {
+    inner class ItemDeviceViewHolder(private val binding: ItemDeviceBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(device: ItemDevice) {
             binding.device = device
             binding.executePendingBindings()
@@ -24,4 +24,9 @@ class ItemDeviceAdapter(private val devices: List<ItemDevice>) : RecyclerView.Ad
     }
 
     override fun getItemCount() = devices.size
+
+    fun updateItems(newItems: List<ItemDevice>) {
+        devices = newItems
+        notifyDataSetChanged() // 데이터 변경 후 RecyclerView 업데이트
+    }
 }
