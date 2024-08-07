@@ -5,7 +5,14 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -16,25 +23,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SaveWith_android"
-        tools:targetApi="31">
-        <activity android:name=".GraphDayActivity"/>
-        <activity android:name=".GraphHrActivity"/>
-        <activity android:name=".GraphBpActivity"/>
-        <activity android:name=".GraphStressActivity"/>
-        <activity android:name=".ThreatActivity"/>
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31"
+        android:networkSecurityConfig="@xml/network_security_config">
+
+        <activity android:name=".GraphDayActivity" android:exported="false"/>
+        <activity android:name=".GraphHrActivity" android:exported="false"/>
+        <activity android:name=".GraphBpActivity" android:exported="false"/>
+        <activity android:name=".GraphStressActivity" android:exported="false"/>
+        <activity android:name=".ThreatActivity" android:exported="false"/>
+        <activity android:name=".SettingActivity" android:exported="false"/>
+        <activity android:name=".AddGuardActivity" android:exported="false"/>
+        <activity android:name=".MainActivity" android:exported="false"/>
+
+        <activity android:name=".Login1Activity" android:exported="true"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".Login2Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login1Activity"/>
-        <activity android:name=".Login2Activity"/>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".CkAccessActivity" />
+        <activity android:name=".SignUpActivity" android:exported="false"/>
+        <activity android:name=".CkAccessActivity" android:exported="false"/>
+        <activity android:name=".ProfileActivity" android:exported="false"/>
+        <activity android:name=".PrivacyActivity" android:exported="false"/>
+        <activity android:name=".NotifSettActivity" android:exported="false"/>
+        <activity android:name=".MeasureActivity" android:exported="false"/>
+        <activity android:name=".GuardInfoActivity" android:exported="false"/>
+        <activity android:name=".EditPhoneActivity" android:exported="false"/>
+        <activity android:name=".EditGuardActivity" android:exported="false"/>
+        <activity android:name=".DeviceConnActivity" android:exported="false"/>
+        <activity android:name=".AppPermissionActivity" android:exported="false"/>
+        <activity android:name=".CngPwdActivity" android:exported="false"/>
+        <activity android:name=".DelAcctActivity" android:exported="false"/>
+        <activity android:name=".DelPersActivity" android:exported="false"/>
+        <activity android:name=".EditInfoActivity" android:exported="false"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDN6f-AHyirSE5daqExjWSzpvR51xDEmwk" />
     </application>
 
 </manifest>

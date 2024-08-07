@@ -1,81 +1,151 @@
 package com.example.savewith_android
+
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.widget.Spinner
-import java.util.Calendar
-import android.app.DatePickerDialog
 import com.example.savewith_android.databinding.ActivitySignupBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.Calendar
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
+    private lateinit var apiService: ApiService
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_signup) // SignUpActivity 레이아웃 파일 경로
-
         binding = ActivitySignupBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        // 생년월일 선택 버튼 클릭 시 DatePickerDialog 표시
+        // Initialize apiService
+        apiService = ApiClient.createApiService(this)
+
+        binding.left.setOnClickListener { // 뒤로가기(left) 버튼 클릭 시
+            finish()
+        }
+
         binding.birthBtn.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = "${selectedMonth + 1}/$selectedDay/$selectedYear"
+            DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
                 binding.boxBirth.text = selectedDate
-            }, year, month, day)
-
-            datePickerDialog.show()
+            }, year, month, day).show()
         }
 
-        binding.signupBtn.setOnClickListener { // 회원가입 버튼 클릭 시
-            // EditText에서 입력받은 텍스트를 저장
+        binding.signupBtn.setOnClickListener {
             val name = binding.signupName.text.toString()
             val phoneNumber = binding.signupPhoneNum.text.toString()
             val userId = binding.signupId.text.toString()
             val password = binding.signupPw.text.toString()
-            val address = binding.detailAdrss.text.toString()
+            val zipcode = binding.adrssBox1.text.toString()
+            val address = binding.adrssBox2.text.toString()
+            val detailedAddress = binding.detailAdrss.text.toString()
+            val gender = when (binding.spinnerGender.selectedItem.toString()) {
+                "남성" -> "남"
+                "여성" -> "여"
+                else -> ""
+            }
+            val birthDate = binding.boxBirth.text.toString()
 
-            // 성별 선택 및 저장
-            val gender = binding.spinnerGender.selectedItem.toString()
+            val profile = Profile(name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
+            val signUpRequest = SignUpRequest(userId, password, profile)
 
-            // 데베 API 호출 및 작업 코드 추가
-
-            val intent = Intent(this, Login2Activity::class.java) // 로그인2화면으로
-            startActivity(intent)
+            signUp(signUpRequest)
         }
 
-        binding.left.setOnClickListener { // 뒤로가기(left) 버튼 클릭 시
-            finish()
+        binding.adrssBtn.setOnClickListener {
+            showAddressSearch()
+        }
+    }
+
+    private fun signUp(signUpRequest: SignUpRequest) {
+        apiService.signUp(signUpRequest).enqueue(object : Callback<SignUpResponse> {
+            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
+                if (response.isSuccessful) {
+                    val signUpResponse = response.body()
+                    if (signUpResponse != null) {
+                        val token = signUpResponse.token
+
+                        // Save the token using SharedPrefManager
+                        SharedPrefManager.saveToken(this@SignUpActivity, token)
+
+                        val name = binding.signupName.text.toString()
+                        val phoneNumber = binding.signupPhoneNum.text.toString()
+                        saveUserInfo(name, phoneNumber)
+                        Toast.makeText(this@SignUpActivity, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@SignUpActivity, Login2Activity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this@SignUpActivity, "회원가입 실패: 서버 오류", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
+                Toast.makeText(this@SignUpActivity, "네트워크 오류: " + t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun saveUserInfo(name: String, phoneNumber: String) {
+        val sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("name", name)
+            putString("phone_number", phoneNumber)
+            apply()
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun showAddressSearch() {
+        val webView = WebView(this)
+        webView.settings.javaScriptEnabled = true
+        webView.settings.allowFileAccess = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.setSupportMultipleWindows(true)
+        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView.settings.allowUniversalAccessFromFileURLs = true // 추가된 설정
+        webView.webChromeClient = WebChromeClient()
+        webView.webViewClient = WebViewClient()
+        webView.addJavascriptInterface(AndroidBridge(), "android")
+        setContentView(webView)
+        webView.loadUrl("file:///android_asset/address_search.html")
+    }
+
+    inner class AndroidBridge {
+        @JavascriptInterface
+        fun setAddress(zonecode: String, address: String, buildingName: String) {
+            Log.d("SignUpActivity", "주소 선택됨: $zonecode, $address, $buildingName") // 디버깅용 로그
+            runOnUiThread {
+                binding.adrssBox1.text = zonecode
+                binding.adrssBox2.text = address
+                setContentView(binding.root)
+            }
         }
 
-        binding.adrssBtn.setOnClickListener { // 주소검색 버튼 클릭 시
-            // 주소 검색하는 함수 코드 추가
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        @JavascriptInterface
+        fun closeAddressSearch() {
+            runOnUiThread {
+                setContentView(binding.root)
+            }
         }
-
-        binding.chngPhotoBtn.setOnClickListener { // 사진추가 버튼 클릭 시
-            // 사진첩에 접근하여 사진 등록하는 함수 코드 추가
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 시스템 바 패딩 설정
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.activitySignUp) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
     }
 }

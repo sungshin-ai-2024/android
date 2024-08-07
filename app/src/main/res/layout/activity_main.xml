@@ -8,7 +8,6 @@
     android:paddingTop="13dp"
     tools:context=".MainActivity">
 
-
     <ImageView
         android:id="@+id/logo_top"
         android:layout_width="127dp"
@@ -106,7 +105,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <fragment
+                <FrameLayout
                     android:id="@+id/main_map"
                     android:layout_width="0dp"
                     android:layout_height="163dp"
@@ -291,20 +290,6 @@
                         CircleProgressView:layout_constraintStart_toStartOf="parent"
                         CircleProgressView:layout_constraintTop_toBottomOf="@+id/tv_stress" />
 
-                    <!--<TextView
-                        android:id="@+id/tv_stress_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8.47dp"
-                        android:fontFamily="@font/suit_medium"
-                        android:text="보통"
-                        android:textColor="@color/font"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="9dp"/>-->
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -465,7 +450,6 @@
                     android:id="@+id/tv5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
                     android:layout_marginTop="21dp"
                     android:fontFamily="@font/suit_semibold"
                     android:text="건"
