@@ -90,5 +90,48 @@
         app:layout_constraintHorizontal_bias="0"
         tools:text="+82 10-2345-6789" />
 
+        <ImageView
+            android:id="@+id/btn_del"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:contentDescription="삭제 버튼"
+            android:background="@drawable/box_gray4_bttn"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintEnd_toStartOf="@id/btn_edit"
+            app:layout_constraintTop_toTopOf="@id/img_back"
+            app:layout_constraintBottom_toBottomOf="@id/img_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_medium"
+            android:textColor="@color/gray1"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/btn_del"
+            app:layout_constraintStart_toStartOf="@id/btn_del"
+            app:layout_constraintTop_toTopOf="@id/btn_del"
+            app:layout_constraintBottom_toBottomOf="@id/btn_del"
+            tools:text="삭제"/>
+
+        <ImageView
+            android:id="@+id/btn_edit"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:contentDescription="수정 버튼"
+            android:background="@drawable/box_gray4_bttn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_back"
+            app:layout_constraintBottom_toBottomOf="@id/img_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_medium"
+            android:textColor="@color/gray1"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/btn_edit"
+            app:layout_constraintStart_toStartOf="@id/btn_edit"
+            app:layout_constraintTop_toTopOf="@id/btn_edit"
+            app:layout_constraintBottom_toBottomOf="@id/btn_edit"
+            tools:text="수정"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
