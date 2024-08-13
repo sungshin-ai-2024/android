@@ -14,7 +14,8 @@ data class ItemGuardian(
     val name: String,
     val relation: String,
     val phone: String,
-    val photoUrl: String? // 이미지 URL
+    val photoUrl: String?
+// 이미지 URL
 )
 
 @RequiresApi(Build.VERSION_CODES.O)
