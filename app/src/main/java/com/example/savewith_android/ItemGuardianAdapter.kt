@@ -12,9 +12,12 @@ class ItemGuardianAdapter(private var guardians: List<ItemGuardian>) : RecyclerV
             binding.guardian = guardian
             binding.executePendingBindings()
 
-            // ItemGuard.xml에서 클릭할 수 있는 게 있으면
-            // 해당 기능 실행하는 코드 추가하기
-            // 예를 들어, 보호자 정보 수정하기 등의 버튼을 만들었으면 그것을 클릭했을 경우
+            binding.btnDel.setOnClickListener {
+                // 해당 보호자 삭제하는 코드
+            }
+            binding.btnEdit.setOnClickListener {
+                // 해당 보호자 정보 수정하는 코드
+            }
         }
     }
 

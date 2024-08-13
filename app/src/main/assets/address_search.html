@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주소 검색</title>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+        #layer {
+            display: none;
+            position: fixed;
+            overflow: hidden;
+            z-index: 1;
+            -webkit-overflow-scrolling: touch;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: none;
+            background-color: white; /* 배경색 추가 */
+        }
+        .btn_close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background: #f8f8f8;
+            border: none;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+            z-index: 2; /* 닫기 버튼이 다른 요소들 위에 표시되도록 설정 */
+        }
+        #searchContainer {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            height: calc(100% - 50px);
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="layer">
+    <button id="btnCloseLayer" class="btn_close" onclick="closeDaumPostcode()">X</button>
+    <div id="searchContainer"></div>
+</div>
+
+<script>
+    function execDaumPostcode() {
+        var element_layer = document.getElementById('layer');
+        var searchContainer = document.getElementById('searchContainer');
+
+        new daum.Postcode({
+            oncomplete: function(data) {
+                console.log('주소 선택됨: ', data); // 디버깅용 로그
+                // 주소 선택 시, 앱에 결과 전달
+                window.android.setAddress(data.zonecode, data.address, data.buildingName);
+                element_layer.style.display = 'none';
+            },
+            onresize: function(size) {
+                searchContainer.style.height = size.height + 'px';
+            },
+            width: '100%',
+            height: '100%'
+        }).embed(searchContainer);
+
+        element_layer.style.display = 'block';
+    }
+
+    function closeDaumPostcode() {
+        var element_layer = document.getElementById('layer');
+        element_layer.style.display = 'none';
+        window.android.closeAddressSearch();
+    }
+
+    // 페이지가 로드되면 자동으로 주소 검색 실행
+    window.onload = execDaumPostcode;
+</script>
+</body>
+</html>

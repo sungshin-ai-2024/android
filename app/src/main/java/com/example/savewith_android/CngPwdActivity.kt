@@ -14,9 +14,10 @@ import com.example.savewith_android.databinding.ActivityChgPwdBinding
 
 class CngPwdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChgPwdBinding
-    private val apiService: ApiService by lazy {
+    /*private val apiService: ApiService by lazy {
         RetrofitClient.apiService
-    }
+    }*/
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +37,7 @@ class CngPwdActivity : AppCompatActivity() {
 
             if (currentPwd.isNotEmpty() && newPwd.isNotEmpty() && ckNewPwd.isNotEmpty()) {
 //                changePwd(userName, userPhoneNumber, userRelationship) // 데베에 비밀번호 변경 코드 추가
-
 //                Toast.makeText(this, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
-
 //                finish()
                 if (newPwd != ckNewPwd) {
                     Toast.makeText(this, "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()

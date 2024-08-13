@@ -12,6 +12,7 @@ import retrofit2.Response
 
 class EditPhoneActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditPhonenumBinding
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,7 @@ class EditPhoneActivity : AppCompatActivity() {
     private fun sendVerificationCode(phoneNum: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response: Response<Void> = RetrofitClient.apiService.sendVerificationCode(PhoneNumberRequest(phoneNum))
+                val response: Response<Void> = apiService.sendVerificationCode(PhoneNumberRequest(phoneNum))
                 if (response.isSuccessful) {
                     runOnUiThread {
                         Toast.makeText(this@EditPhoneActivity, "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT).show()
@@ -69,7 +70,7 @@ class EditPhoneActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val token = getAuthToken() ?: return@launch
-                val response: Response<Void> = RetrofitClient.apiService.verifyCode("Bearer $token", VerificationCodeRequest(certifNum))
+                val response: Response<Void> = apiService.verifyCode("Bearer $token", VerificationCodeRequest(certifNum))
                 if (response.isSuccessful) {
                     runOnUiThread {
                         updatePhoneNumber()
@@ -92,7 +93,7 @@ class EditPhoneActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val token = getAuthToken() ?: return@launch
-                val response: Response<Void> = RetrofitClient.apiService.updatePhoneNumber("Bearer $token", PhoneNumberRequest(newPhoneNum))
+                val response: Response<Void> = apiService.updatePhoneNumber("Bearer $token", PhoneNumberRequest(newPhoneNum))
                 if (response.isSuccessful) {
                     runOnUiThread {
                         Toast.makeText(this@EditPhoneActivity, "휴대폰 번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()

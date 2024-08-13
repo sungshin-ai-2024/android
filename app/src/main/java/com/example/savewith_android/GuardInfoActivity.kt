@@ -3,21 +3,28 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savewith_android.databinding.ActivityGuardianInfoBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class GuardInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGuardianInfoBinding
     private val viewModel: ItemGuardianModel by viewModels()  // ViewModel 초기화
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,8 +60,36 @@ class GuardInfoActivity : AppCompatActivity() {
         loadGuardianData()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    /*
     private fun loadGuardianData() {
+        val token = SharedPrefManager.getToken(this) // SharedPrefManager를 사용해 토큰을 가져옴
+        if (token != null) {
+            apiService.getGuardProfile("Bearer $token").enqueue(object : Callback<GuardProfileResponse> {
+                override fun onResponse(call: Call<GuardProfileResponse>, response: Response<GuardProfileResponse) {
+                    if (response.isSuccessful) {
+                        val guardProfileResponse = response.body()
+                        if (guardProfileResponse != null) {
+                            val userProfile = guardProfileResponse.guardian // ProfileResponse에서 Profile 객체를 가져옴
+                            updateUI(userProfile)
+                        }else {
+                            Toast.makeText(this@GuardInfoActivity, "유저 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("ProfileActivity", "User data is null")
+                        }
+                    } else {
+                        Toast.makeText(this@GuardInfoActivity, "프로필 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("ProfileActivity", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                    Toast.makeText(this@GuardInfoActivity, "네트워크 오류로 프로필 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                    Log.e("ProfileActivity", "Failure: ${t.message}", t)
+                }
+            })
+        } else {
+            Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
 //            val response = RetrofitClient.apiService.getGuardianData() // 적절한 API 호출로 대체
 //            if (response.isSuccessful) {
@@ -65,12 +100,13 @@ class GuardInfoActivity : AppCompatActivity() {
 //                // 에러 처리
 //            }
 
+            /*
             try {
                 val token = MyApplication.appContext.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                     .getString("auth_token", null)
 
                 if (token != null) {
-                    val response: Response<List<ItemGuardian>> = RetrofitClient.guardianService.getGuardianData("Bearer $token")
+                    val response: Response<List<ItemGuardian>> = ApiClient.guardianService.getGuardianData("Bearer $token")
                     if (response.isSuccessful) {
                         response.body()?.let { guardianList ->
                             runOnUiThread {
@@ -93,7 +129,38 @@ class GuardInfoActivity : AppCompatActivity() {
                 runOnUiThread {
                     // Show error message
                 }
-            }
+            }*/
+        }
+    }*/
+
+    private fun loadGuardianData() {
+        val token = SharedPrefManager.getToken(this) // SharedPrefManager를 사용해 토큰을 가져옴
+        if (token != null) {
+            apiService.getGuardians("Bearer $token").enqueue(object : Callback<List<Guardian>> {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onResponse(call: Call<List<Guardian>>, response: Response<List<Guardian>>) {
+                    if (response.isSuccessful) {
+                        val guardians = response.body() ?: emptyList()
+                        viewModel.setGuardians(guardians.map { ItemGuardian(it.name, it.phone, it.relation, it.photoUrl) })
+                    } else {
+                        Toast.makeText(this@GuardInfoActivity, "보호자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("GuardInfoActivity", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Guardian>>, t: Throwable) {
+                    Toast.makeText(this@GuardInfoActivity, "네트워크 오류로 보호자 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                    Log.e("GuardInfoActivity", "Failure: ${t.message}", t)
+                }
+            })
+        } else {
+            Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
+
+    /*private fun updateUI(guardData: Guardian) {
+        binding.boxName.text = guardData.name
+        binding.boxId.text = guardData.phone
+        binding.detailAdrss.text = guardData.relation
+    }*/
 }

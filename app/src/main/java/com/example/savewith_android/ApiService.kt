@@ -1,5 +1,7 @@
 package com.example.savewith_android
 
+import android.provider.ContactsContract
+import com.google.firebase.firestore.auth.User
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -10,31 +12,31 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface ApiService {
+    @POST("api/signup/")
+    fun signUp(@Body signUpRequest: SignUpRequest): Call<SignUpResponse>
+    @POST("api/login/")
+    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
+    @GET("api/profile/")
+    fun getUserProfile(@Header("Authorization") token: String): Call<ProfileResponse>
+    @GET("api/guardians/")
+    fun getGuardians(@Header("Authorization") token: String): Call<List<Guardian>>
+    @DELETE("api/user/delete/") // 데이터 삭제
+    fun deleteUser(@Header("Authorization") token: String): Call<DeleteResponse>
+
     // API 메소드 정의
-    @GET("api/users/")
-    suspend fun getUsers(): List<UserData>
-
-    @GET("api/users")
-    suspend fun getUserData(@Header("Authorization") token: String): Response<UserData> // Response<List<UserData>>
-    @GET("api/users")
-    suspend fun getUserData(): Response<UserData> // Response<List<UserData>>
-
-    @GET("path/to/guardian/data") // 적절한 API 경로로 대체
+    @GET("api/guardian/data") // 보호자 정보 가져오기 v1
     suspend fun getGuardianData(): Response<List<ItemGuardian>>
 
-    @POST("login")
-    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
-
-    @GET("profile")
-    fun getUserProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
-
-    @GET("guardian")
+    @GET("api/guardian") // 보호자정보 가져오기 v2
     fun getGuardianInfo(@Header("Authorization") token: String): Call<GuardianResponse>
 
-    @PUT("profile")
+//    @GET("api/profile") // 유저 프로필 가져오기
+//    fun getUserProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
+
+    @PUT("api/profile/") //
     fun updateUserProfile(@Header("Authorization") token: String, @Body updateRequest: UserProfileUpdateRequest): Response<Void>
 
-    @PUT("guardian")
+    @PUT("api/guardian/")
     fun updateGuardianInfo(@Header("Authorization") token: String, @Body updateRequest: GuardianUpdateRequest): Response<Void>
 
 //    @POST("send_verification_code/")
@@ -45,6 +47,7 @@ interface ApiService {
 //
 //    @POST("update_phone_number/")
 //    suspend fun updatePhoneNumber(@Header("Authorization") authHeader: String, @Body phoneNumber: String): Response<Void>
+
     @POST("send_verification_code/")
     suspend fun sendVerificationCode(@Body phoneNumberRequest: PhoneNumberRequest): Response<Void>
 
@@ -54,14 +57,11 @@ interface ApiService {
     @POST("update_phone_number/")
     suspend fun updatePhoneNumber(@Header("Authorization") authHeader: String, @Body phoneNumberRequest: PhoneNumberRequest): Response<Void>
 
-    @PUT("user/change-password")
+    @PUT("api/user/change-password") // 유저 비번 변경
     suspend fun changePassword(
         @Header("Authorization") token: String,
         @Body passwordChangeRequest: PasswordChangeRequest
     ): Response<ApiResponse>
-
-    @DELETE("user")
-    suspend fun deleteUser(@Header("Authorization") token: String): Response<ApiResponse>
 }
 
 //data class PhoneNumberRequest(val phoneNumber: String)

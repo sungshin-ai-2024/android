@@ -2,6 +2,7 @@ package com.example.savewith_android
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +11,15 @@ import com.example.savewith_android.databinding.ActivityDeviceConnectionBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class DeviceConnActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDeviceConnectionBinding
     private val devices = mutableListOf<ItemDevice>()  // 기기 정보를 저장할 리스트
     private lateinit var adapter: ItemDeviceAdapter
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +53,52 @@ class DeviceConnActivity : AppCompatActivity() {
     }
 
     private fun fetchDeviceInfo() {
+        val token = SharedPrefManager.getToken(this)
+
+        if (token != null) {
+            apiService.getUserProfile("Bearer $token").enqueue(object : Callback<ProfileResponse> {
+                override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
+                    if (response.isSuccessful) {
+                        val userProfile = response.body()
+                        if (userProfile != null) {
+                            val deviceInfo = ItemDevice(
+                                UserName = userProfile.signup_id,  // 서버에서 받은 사용자 이름
+                                Model = "${Build.MANUFACTURER} ${Build.MODEL}",
+                                LastUsed = Build.VERSION.RELEASE
+                            )
+
+                            devices.add(deviceInfo)
+                            adapter.updateItems(devices)
+                        } else {
+                            Toast.makeText(this@DeviceConnActivity, "유저 정보가 없습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("DeviceConnActivity", "User profile is null")
+                        }
+                    } else {
+                        Toast.makeText(this@DeviceConnActivity, "유저 정보 가져오기 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Log.e("DeviceConnActivity", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                    Toast.makeText(this@DeviceConnActivity, "네트워크 오류로 유저 정보를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                    Log.e("DeviceConnActivity", "Failure: ${t.message}", t)
+                }
+            })
+        } else {
+            Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    /*
+    private fun fetchDeviceInfo() {
         // 토큰 가져오기
         val token = getAuthToken() ?: return
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // 서버에서 유저 정보 가져오기
-                val response: Response<UserProfileResponse> = RetrofitClient.apiService.getUserProfile("Bearer $token")
+                val response: Response<ProfileResponse> = apiService.getUserProfile("Bearer $token")
 
                 if (response.isSuccessful) {
                     val userProfile = response.body()
@@ -91,7 +134,7 @@ class DeviceConnActivity : AppCompatActivity() {
         // 리스트에 기기 정보 추가 및 RecyclerView 업데이트
 //        devices.add(deviceInfo)
 //        adapter.updateItems(devices)
-    }
+    }*/
 
     private fun showAddDeviceDialog() {
         // 사용자로부터 기기 정보를 입력받는 다이얼로그를 띄우고, 기기 정보를 추가하는 코드 구현

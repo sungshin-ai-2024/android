@@ -38,10 +38,32 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/suit_semibold"
             android:layout_marginStart="27dp"
-            android:text="수정의 S22"
+            android:text="수정"
             android:textColor="@color/font"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/sett1_user_box"
+            app:layout_constraintTop_toTopOf="@id/sett_box1"/>
+        <TextView
+            android:id="@+id/sett1_box1_phone2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:layout_marginStart="0dp"
+            android:text="의 "
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/sett1_box1_phone"
+            app:layout_constraintTop_toTopOf="@id/sett_box1"/>
+        <TextView
+            android:id="@+id/sett1_box1_phone3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_semibold"
+            android:layout_marginStart="0dp"
+            android:text="S22"
+            android:textColor="@color/font"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/sett1_box1_phone2"
             app:layout_constraintTop_toTopOf="@id/sett_box1"/>
         <TextView
             android:id="@+id/sett1_box1_phone_v"

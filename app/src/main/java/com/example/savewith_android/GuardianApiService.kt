@@ -12,7 +12,7 @@ interface GuardianApiService {
 }
 
 class GuardianRepository {
-    private val service = RetrofitClient.guardianService
+    private val service = ApiClient.guardianService
 
     suspend fun fetchGuardians(): List<ItemGuardian> {
         return try {

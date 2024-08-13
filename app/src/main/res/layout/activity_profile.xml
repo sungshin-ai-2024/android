@@ -375,7 +375,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/box1_adrss"/>
                         <TextView
-                            android:id="@+id/box3_adrss"
+                            android:id="@+id/detail_adrss"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/box_sub2"

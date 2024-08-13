@@ -1,22 +1,21 @@
 package com.example.savewith_android
+
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.savewith_android.databinding.ActivityProfileBinding
-import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private val apiService by lazy {
-        RetrofitClient.apiService
-    }
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +41,46 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun loadProfileData() {
+        val token = SharedPrefManager.getToken(this) // SharedPrefManager를 사용해 토큰을 가져옴
+        if (token != null) {
+            apiService.getUserProfile("Bearer $token").enqueue(object : Callback<ProfileResponse> {
+                override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
+                    if (response.isSuccessful) {
+//                        val userData = response.body()
+//                        if (userData != null) {
+//                            updateUI(userData)
+//                        }
+                        val profileResponse = response.body()
+                        if (profileResponse != null) {
+                            val userProfile = profileResponse.profile // ProfileResponse에서 Profile 객체를 가져옴
+                            updateUI(userProfile)
+                        }else {
+                            Toast.makeText(this@ProfileActivity, "유저 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("ProfileActivity", "User data is null")
+                        }
+                    } else {
+                        Toast.makeText(this@ProfileActivity, "프로필 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("ProfileActivity", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                    Toast.makeText(this@ProfileActivity, "네트워크 오류로 프로필 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                    Log.e("ProfileActivity", "Failure: ${t.message}", t)
+                }
+            })
+        } else {
+            Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /*
+    private fun loadProfileData() {
         lifecycleScope.launch {
             try {
                 // 토큰 가져오기
-                val token = getAuthToken()
+                val token = SharedPrefManager.getToken(this)
+//                val token = getAuthToken()
                 if (token != null) {
                     // API 호출하여 유저 정보 가져오기
                     val response: Response<UserData> = apiService.getUserData("Bearer $token")
@@ -71,7 +106,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun getAuthToken(): String? {
         val sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("auth_token", null)
-    }
+    }*/
 
 //    private fun loadProfileData() {
 //        lifecycleScope.launch {
@@ -93,15 +128,15 @@ class ProfileActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun updateUI(userData: UserData) {
-        binding.boxName.text = userData.name
+    private fun updateUI(userData: Profile) {
+        binding.boxName.text = userData.signup_name
         binding.boxId.text = userData.id
-        binding.boxPhone.text = userData.phone
-        binding.boxBirth.text = userData.birth
+        binding.boxPhone.text = userData.phone_number
+        binding.boxBirth.text = userData.birth_date
         binding.boxSex.text = userData.gender
-        binding.box1Adrss.text = userData.address1
-        binding.box2Adrss.text = userData.address2
-        binding.box3Adrss.text = userData.address3
+        binding.box1Adrss.text = userData.zipcode
+        binding.box2Adrss.text = userData.address
+        binding.detailAdrss.text = userData.detailed_address
 
         // 프로필 사진 로딩 (Glide 또는 Picasso와 같은 라이브러리를 사용할 수 있음)
 //        userData.photoUrl?.let {

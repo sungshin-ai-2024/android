@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 data class ItemGuardian(
-    val grgName: String,
+    val name: String,
     val relation: String,
     val phone: String,
     val photoUrl: String? // 이미지 URL
@@ -26,6 +26,7 @@ class ItemGuardianModel(application: Application) : AndroidViewModel(application
         _guardians.value = guardianList
     }
 
+    /*
     fun fetchGuardians() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -35,5 +36,5 @@ class ItemGuardianModel(application: Application) : AndroidViewModel(application
                 // Handle error
             }
         }
-    }
+    }*/
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.savewith_android.RetrofitClient.apiService
 import com.example.savewith_android.databinding.ActivityEditGuardianBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +12,7 @@ import retrofit2.Response
 
 class EditGuardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditGuardianBinding
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

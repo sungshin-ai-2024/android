@@ -17,9 +17,10 @@ class EditInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditInfoBinding
 
     // Retrofit 인스턴스 설정
-    private val apiService by lazy {
-        RetrofitClient.apiService
-    }
+//    private val apiService by lazy {
+//        RetrofitClient.apiService
+//    }
+    private lateinit var apiService: ApiService
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
