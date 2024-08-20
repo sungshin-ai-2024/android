@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -11,6 +13,7 @@ android {
         viewBinding = true
         dataBinding = true
     }
+
 
     defaultConfig {
         applicationId = "com.example.savewith_android"
