@@ -43,13 +43,9 @@ class ProfileActivity : AppCompatActivity() {
     private fun loadProfileData() {
         val token = SharedPrefManager.getToken(this) // SharedPrefManager를 사용해 토큰을 가져옴
         if (token != null) {
-            apiService.getUserProfile("Bearer $token").enqueue(object : Callback<ProfileResponse> {
+            apiService.getUserProfile().enqueue(object : Callback<ProfileResponse> {
                 override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
                     if (response.isSuccessful) {
-//                        val userData = response.body()
-//                        if (userData != null) {
-//                            updateUI(userData)
-//                        }
                         val profileResponse = response.body()
                         if (profileResponse != null) {
                             val userProfile = profileResponse.profile // ProfileResponse에서 Profile 객체를 가져옴
@@ -130,10 +126,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun updateUI(userData: Profile) {
         binding.boxName.text = userData.signup_name
-        binding.boxId.text = userData.id
+        binding.boxId.text = userData.signup_id
         binding.boxPhone.text = userData.phone_number
         binding.boxBirth.text = userData.birth_date
-        binding.boxSex.text = userData.gender
+        binding.boxSex.text = userData.sex
         binding.box1Adrss.text = userData.zipcode
         binding.box2Adrss.text = userData.address
         binding.detailAdrss.text = userData.detailed_address

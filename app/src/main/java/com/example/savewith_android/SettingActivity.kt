@@ -1,10 +1,12 @@
 package com.example.savewith_android
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.savewith_android.databinding.ActivitySettingBinding
@@ -15,6 +17,15 @@ import retrofit2.Response
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
     private lateinit var apiService: ApiService
+    companion object {
+        private const val EDIT_PROFILE_REQUEST = 1
+    }
+    private val editProfileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            loadUserInfo()
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +112,7 @@ class SettingActivity : AppCompatActivity() {
     private fun loadUserInfo() {
         val token = SharedPrefManager.getToken(this)
         if (token != null) {
-            apiService.getUserProfile("Token $token").enqueue(object : Callback<ProfileResponse> {
+            apiService.getUserProfile().enqueue(object : Callback<ProfileResponse> {
                 override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
                     if (response.isSuccessful) {
                         val profileResponse = response.body()

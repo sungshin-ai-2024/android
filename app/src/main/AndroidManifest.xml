@@ -51,12 +51,12 @@
         <activity android:name=".PrivacyActivity" android:exported="false"/>
         <activity android:name=".NotifSettActivity" android:exported="false"/>
         <activity android:name=".MeasureActivity" android:exported="false"/>
-        <activity android:name=".GuardInfoActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".GuardInfoActivity" android:exported="false">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".EditPhoneActivity" android:exported="false"/>
         <activity android:name=".EditGuardActivity" android:exported="false"/>
@@ -67,7 +67,13 @@
         <activity android:name=".DelAcctActivity" android:exported="false"/>
         <activity android:name=".DelPersActivity" android:exported="false"/>
         <activity android:name=".EditInfoActivity" android:exported="false"/>
-        <activity android:name=".SettingActivity" android:exported="false"/>
+        <activity android:name=".SettingActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -71,6 +71,7 @@
 <!--            app:layout_constraintTop_toTopOf="@id/add_btn" />-->
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"

@@ -47,15 +47,14 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.signupBtn.setOnClickListener { // 회원가입 버튼 클릭 시
-            // EditText에서 입력받은 텍스트를 저장
-            val name = binding.signupName.text.toString()
-            val phoneNumber = binding.signupPhoneNum.text.toString()
             val userId = binding.signupId.text.toString()
             val password = binding.signupPw.text.toString()
+
+            val name = binding.signupName.text.toString()
+            val phoneNumber = binding.signupPhoneNum.text.toString()
             val zipcode = binding.adrssBox1.text.toString()
             val address = binding.adrssBox2.text.toString()
             val detailedAddress = binding.detailAdrss.text.toString()
-            // 성별 선택 및 저장
             val gender = when (binding.spinnerGender.selectedItem.toString()) {
                 "남성" -> "남"
                 "여성" -> "여"
@@ -63,15 +62,10 @@ class SignUpActivity : AppCompatActivity() {
             }
             val birthDate = binding.boxBirth.text.toString()
 
-            val token = SharedPrefManager.getToken(this).toString()
-
-            val profile = Profile(token, userId, name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
+            val profile = Profile(userId, password, name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
             val signUpRequest = SignUpRequest(userId, password, profile)
 
             signUp(signUpRequest)
-
-//            val intent = Intent(this, Login2Activity::class.java) // 로그인2화면으로
-//            startActivity(intent)
         }
 
         binding.left.setOnClickListener { // 뒤로가기(left) 버튼 클릭 시

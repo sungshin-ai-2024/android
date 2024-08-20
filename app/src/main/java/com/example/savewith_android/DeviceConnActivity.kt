@@ -54,9 +54,8 @@ class DeviceConnActivity : AppCompatActivity() {
 
     private fun fetchDeviceInfo() {
         val token = SharedPrefManager.getToken(this)
-
         if (token != null) {
-            apiService.getUserProfile("Bearer $token").enqueue(object : Callback<ProfileResponse> {
+            apiService.getUserProfile().enqueue(object : Callback<ProfileResponse> {
                 override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
                     if (response.isSuccessful) {
                         val userProfile = response.body()

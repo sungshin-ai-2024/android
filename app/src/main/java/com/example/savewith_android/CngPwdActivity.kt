@@ -11,13 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import com.example.savewith_android.databinding.ActivityChgPwdBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CngPwdActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChgPwdBinding
-    /*private val apiService: ApiService by lazy {
-        RetrofitClient.apiService
-    }*/
     private lateinit var apiService: ApiService
+    private lateinit var token: String
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,57 +31,14 @@ class CngPwdActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.editNumBtn.setOnClickListener { // 변경하기 클릭시
-            val currentPwd = binding.boxOrigPwd.text.toString()
-            val newPwd = binding.boxNewPwd.text.toString()
-            val ckNewPwd = binding.boxCkNewPwd.text.toString()
+        // 비밀번호 변경 버튼 클릭 이벤트
+        binding.editNumBtn.setOnClickListener {
+            val currentPwd = binding.boxOrigPwd.text.toString().trim()
+            val newPwd = binding.boxNewPwd.text.toString().trim()
+            val ckNewPwd = binding.boxCkNewPwd.text.toString().trim()
 
-            if (currentPwd.isNotEmpty() && newPwd.isNotEmpty() && ckNewPwd.isNotEmpty()) {
-//                changePwd(userName, userPhoneNumber, userRelationship) // 데베에 비밀번호 변경 코드 추가
-//                Toast.makeText(this, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
-//                finish()
-                if (newPwd != ckNewPwd) {
-                    Toast.makeText(this, "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    // 비밀번호 변경 요청
-                    lifecycleScope.launch {
-                        try {
-                            val token = getAuthToken()
-                            val response = apiService.changePassword(
-                                token = "Bearer $token",
-                                passwordChangeRequest = PasswordChangeRequest(
-                                    currentPassword = currentPwd,
-                                    newPassword = newPwd
-                                )
-                            )
-
-                            if (response.isSuccessful) {
-                                response.body()?.let {
-                                    if (it.success) {
-                                        Toast.makeText(this@CngPwdActivity, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show()
-                                        finish()
-                                    } else {
-                                        Toast.makeText(this@CngPwdActivity, it.message, Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(this@CngPwdActivity, "비밀번호 변경에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                        } catch (e: HttpException) {
-                            Toast.makeText(this@CngPwdActivity, "서버 오류: ${e.message}", Toast.LENGTH_SHORT).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(this@CngPwdActivity, "알 수 없는 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            } else if(currentPwd.isEmpty()) {
-                Toast.makeText(this, "현재 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else if(newPwd.isEmpty()) {
-                Toast.makeText(this, "새 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else if(ckNewPwd.isEmpty()) {
-                Toast.makeText(this, "새 비밀번호 확인 칸을 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (validateInputs(currentPwd, newPwd, ckNewPwd)) {
+                changePassword(currentPwd, newPwd)
             }
         }
 
@@ -90,8 +48,44 @@ class CngPwdActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAuthToken(): String? {
-        val sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("auth_token", null)
+    private fun validateInputs(currentPwd: String, newPwd: String, ckNewPwd: String): Boolean {
+        return when {
+            currentPwd.isEmpty() -> {
+                Toast.makeText(this, "현재 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                false
+            }
+            newPwd.isEmpty() -> {
+                Toast.makeText(this, "새 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                false
+            }
+            ckNewPwd.isEmpty() -> {
+                Toast.makeText(this, "새 비밀번호 확인 칸을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                false
+            }
+            newPwd != ckNewPwd -> {
+                Toast.makeText(this, "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun changePassword(currentPwd: String, newPwd: String) {
+        val passwordChangeRequest = PasswordChangeRequest(currentPwd, newPwd)
+        apiService.changePassword("Bearer $token", passwordChangeRequest).enqueue(object :
+            Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@CngPwdActivity, "비밀번호가 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                    finish() // 성공 시 화면 종료
+                } else {
+                    Toast.makeText(this@CngPwdActivity, "비밀번호 변경 실패: 서버 오류", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(this@CngPwdActivity, "네트워크 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
