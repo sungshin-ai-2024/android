@@ -11,10 +11,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import android.app.Activity
+
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
     private lateinit var apiService: ApiService
+    companion object {
+        private const val EDIT_PROFILE_REQUEST = 1
+    }
+    private val editProfileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            loadUserInfo()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +98,7 @@ class SettingActivity : AppCompatActivity() {
         }
         binding.settTxtEditPersdata.setOnClickListener { // 개인정보수정 클릭 시
             val intent = Intent(this, EditInfoActivity::class.java)
-            startActivity(intent)
+            editProfileLauncher.launch(intent)
         }
         binding.settTxtEditGuard.setOnClickListener { // 보호자정보수정 클릭 시
             val intent = Intent(this, EditGuardActivity::class.java)
@@ -98,11 +109,17 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_PROFILE_REQUEST && resultCode == RESULT_OK) {
+            loadUserInfo()
+        }
+    }
 
     private fun loadUserInfo() {
         val token = SharedPrefManager.getToken(this)
         if (token != null) {
-            apiService.getUserProfile("Token $token").enqueue(object : Callback<ProfileResponse> {
+            apiService.getUserProfile().enqueue(object : Callback<ProfileResponse> {
                 override fun onResponse(call: Call<ProfileResponse>, response: Response<ProfileResponse>) {
                     if (response.isSuccessful) {
                         val profileResponse = response.body()

@@ -10,9 +10,6 @@ import retrofit2.http.PUT
 import retrofit2.http.PATCH
 
 
-
-
-
 data class LoginRequest(
     val signup_id: String,
     val password: String)
@@ -21,13 +18,24 @@ data class LoginResponse(
     val userName: String,
     val userPhone: String
 )
+
+data class SignUpRequest(
+    val signup_id: String,
+    val password: String,
+    val profile: Profile
+)
+
 data class SignUpResponse(
-    val user: User,
+    val profile: Profile,
     val token: String)
 
 data class ProfileResponse(
     val signup_id: String,
     val profile: Profile
+)
+data class PasswordChangeRequest(
+    val current_password: String,
+    val new_password: String
 )
 
 interface ApiService {
@@ -36,6 +44,12 @@ interface ApiService {
     @POST("api/login/")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
     @GET("api/profile/")
-    fun getUserProfile(@Header("Authorization") token: String): Call<ProfileResponse>
-
+    fun getUserProfile(): Call<ProfileResponse>
+    @PATCH("api/profile/")
+    fun updateUserProfile(@Body profileUpdateRequest: ProfileUpdateRequest): Call<ProfileResponse>
+    @PUT("api/change-password/")
+    fun changePassword(
+        @Header("Authorization") token: String,
+        @Body passwordChangeRequest: PasswordChangeRequest
+    ): Call<Void>
 }

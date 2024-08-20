@@ -48,10 +48,11 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.signupBtn.setOnClickListener {
-            val name = binding.signupName.text.toString()
-            val phoneNumber = binding.signupPhoneNum.text.toString()
             val userId = binding.signupId.text.toString()
             val password = binding.signupPw.text.toString()
+
+            val name = binding.signupName.text.toString()
+            val phoneNumber = binding.signupPhoneNum.text.toString()
             val zipcode = binding.adrssBox1.text.toString()
             val address = binding.adrssBox2.text.toString()
             val detailedAddress = binding.detailAdrss.text.toString()
@@ -62,7 +63,7 @@ class SignUpActivity : AppCompatActivity() {
             }
             val birthDate = binding.boxBirth.text.toString()
 
-            val profile = Profile(name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
+            val profile = Profile(userId, password, name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
             val signUpRequest = SignUpRequest(userId, password, profile)
 
             signUp(signUpRequest)
