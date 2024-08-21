@@ -21,6 +21,7 @@ class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
     private lateinit var binding: ActivityGuardianInfoBinding
     private lateinit var guardianAdapter: GuardianAdapter
     private lateinit var apiService: ApiService
+    private var guardians: MutableList<Guardian> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +43,6 @@ class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
             adapter = guardianAdapter
         }
     }
-
     private fun setupClickListeners() {
         binding.left.setOnClickListener { finish() }
         binding.addGuardBtn.setOnClickListener {
@@ -97,17 +97,14 @@ class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
 
     private fun deleteGuardian(guardian: Guardian) {
         val token = SharedPrefManager.getToken(this)
-        Log.d("DeleteGuardian", "Deleting guardian: $guardian")
-
-        if (token != null && guardian.id != null) {
-            apiService.deleteGuardian("Token $token", guardian.id).enqueue(object : Callback<Void> {
+        if (token != null) {
+            apiService.deleteGuardian("Bearer $token", guardian.name, guardian.phone_number).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
-                        Log.d("DeleteGuardian", "Delete successful")
                         Toast.makeText(this@GuardInfoActivity, "${guardian.name}님이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                        loadGuardians()
+                        loadGuardians()  // 목록 새로고침
                     } else {
-                        Log.e("DeleteGuardian", "Delete failed. Code: ${response.code()}, Message: ${response.message()}")
+                        Log.e("DeleteGuardian", "Delete failed. Code: ${response.code()}, Message: ${response.errorBody()?.string()}")
                         Toast.makeText(this@GuardInfoActivity, "보호자 삭제에 실패했습니다. 오류 코드: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -118,8 +115,7 @@ class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
                 }
             })
         } else {
-            Log.e("DeleteGuardian", "Token is null: ${token == null}, Guardian ID is null: ${guardian.id == null}")
-            Toast.makeText(this, "사용자 인증 정보가 없거나 유효하지 않은 보호자 ID입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "사용자 인증 정보가 없습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 

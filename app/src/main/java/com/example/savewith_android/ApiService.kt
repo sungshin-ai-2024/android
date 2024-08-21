@@ -9,6 +9,8 @@ import retrofit2.http.Header
 import retrofit2.http.PUT
 import retrofit2.http.PATCH
 import retrofit2.http.Path
+import retrofit2.http.Query
+
 
 data class Profile(
     val signup_id: String,
@@ -54,11 +56,18 @@ data class PasswordChangeRequest(
     val new_password: String
 )
 data class Guardian(
-    val id: Int?,  // null 가능성을 유지
+    val id: Int?=null,  // null 가능성을 유지
     val name: String,
     val phone_number: String,
     val relationship: String,
     val photoUrl: String? = null
+)
+data class GuardianUpdateRequest(
+    val old_name: String,
+    val old_phone_number: String,
+    val name: String? = null,
+    val phone_number: String? = null,
+    val relationship: String? = null
 )
 data class ItemGuardian(
     val name: String,
@@ -91,16 +100,17 @@ interface ApiService {
     fun addGuardian(@Header("Authorization") token: String, @Body guardian: Guardian): Call<Guardian>
 
 
-    @DELETE("api/guardians/{id}/")
+    @DELETE("api/guardians/delete/")
     fun deleteGuardian(
         @Header("Authorization") token: String,
-        @Path("id") id: Int
+        @Query("name") name: String,
+        @Query("phone_number") phoneNumber: String
     ): Call<Void>
 
-    @GET("api/guardians/{guardianId}/")
-    fun getGuardian(@Header("Authorization") token: String, @Path("guardianId") guardianId: Int): Call<Guardian>
-
-    @PATCH("api/guardians/{guardianId}/")
-    fun updateGuardian(@Header("Authorization") token: String, @Path("guardianId") guardianId: Int, @Body guardian: Guardian): Call<Guardian>
+    @PATCH("api/guardians/update/")
+    fun updateGuardian(
+        @Header("Authorization") token: String,
+        @Body guardian: GuardianUpdateRequest
+    ): Call<Guardian>
 }
 

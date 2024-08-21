@@ -2,6 +2,7 @@ package com.example.savewith_android
 
 import android.R
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.example.savewith_android.databinding.ActivityAddGuardianBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 class AddGuardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddGuardianBinding
     private lateinit var apiService: ApiService
@@ -73,5 +75,20 @@ class AddGuardActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun validateInput(name: String, phoneNumber: String): Boolean {
+        if (name.isEmpty()) {
+            binding.addName.error = "이름을 입력해주세요."
+            return false
+        }
+        if (phoneNumber.isEmpty()) {
+            binding.addPhoneNum.error = "전화번호를 입력해주세요."
+            return false
+        }
+        if (!phoneNumber.matches(Regex("^\\d{10,11}$"))) {
+            binding.addPhoneNum.error = "올바른 전화번호 형식이 아닙니다."
+            return false
+        }
+        return true
     }
 }

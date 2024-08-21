@@ -1,23 +1,20 @@
 package com.example.savewith_android
+
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.savewith_android.databinding.ActivityEditGuardianBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 class EditGuardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditGuardianBinding
     private lateinit var apiService: ApiService
-    private var guardianId: Int? = null
+    private lateinit var originalGuardian: Guardian
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +22,6 @@ class EditGuardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         apiService = ApiClient.createApiService(this)
-
-        guardianId = intent.getIntExtra("GUARDIAN_ID", -1)
-        Log.d("EditGuard", "Received guardian ID: $guardianId")
-        if (guardianId == -1) {
-            Toast.makeText(this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
 
         setupSpinner()
         loadGuardianData()
@@ -47,32 +36,15 @@ class EditGuardActivity : AppCompatActivity() {
     }
 
     private fun loadGuardianData() {
-        val token = SharedPrefManager.getToken(this)
-        if (token != null) {
-            apiService.getGuardian("Bearer $token", guardianId!!).enqueue(object : Callback<Guardian> {
-                override fun onResponse(call: Call<Guardian>, response: Response<Guardian>) {
-                    if (response.isSuccessful) {
-                        val guardian = response.body()
-                        guardian?.let { updateUIWithGuardianData(it) }
-                    } else {
-                        Toast.makeText(this@EditGuardActivity, "보호자 정보를 불러오는데 실패했습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        val name = intent.getStringExtra("GUARDIAN_NAME") ?: ""
+        val phone = intent.getStringExtra("GUARDIAN_PHONE") ?: ""
+        val relationship = intent.getStringExtra("GUARDIAN_RELATIONSHIP") ?: ""
 
-                override fun onFailure(call: Call<Guardian>, t: Throwable) {
-                    Toast.makeText(this@EditGuardActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            })
-        } else {
-            Toast.makeText(this, "사용자 인증 정보가 없거나 유효하지 않은 보호자 ID입니다.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-    }
+        originalGuardian = Guardian(name = name, phone_number = phone, relationship = relationship)
 
-    private fun updateUIWithGuardianData(guardian: Guardian) {
-        binding.boxName.setText(guardian.name)
-        binding.boxPhone.setText(guardian.phone_number)
-        val relationshipPosition = (binding.spinnerRelationship.adapter as ArrayAdapter<String>).getPosition(guardian.relationship)
+        binding.boxName.setText(name)
+        binding.boxPhone.setText(phone)
+        val relationshipPosition = (binding.spinnerRelationship.adapter as ArrayAdapter<String>).getPosition(relationship)
         binding.spinnerRelationship.setSelection(relationshipPosition)
     }
 
@@ -82,41 +54,43 @@ class EditGuardActivity : AppCompatActivity() {
     }
 
     private fun updateGuardian() {
-        val name = binding.boxName.text.toString()
-        val phoneNumber = binding.boxPhone.text.toString()
-        val relationship = binding.spinnerRelationship.selectedItem.toString()
+        val newName = binding.boxName.text.toString()
+        val newPhone = binding.boxPhone.text.toString()
+        val newRelationship = binding.spinnerRelationship.selectedItem.toString()
 
-        if (name.isEmpty() || phoneNumber.isEmpty()) {
-            Toast.makeText(this, "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val updatedGuardian = Guardian(
-            id = guardianId,
-            name = name,
-            phone_number = phoneNumber,
-            relationship = relationship
+        val updateRequest = GuardianUpdateRequest(
+            old_name = originalGuardian.name,
+            old_phone_number = originalGuardian.phone_number,
+            name = if (newName != originalGuardian.name) newName else null,
+            phone_number = if (newPhone != originalGuardian.phone_number) newPhone else null,
+            relationship = if (newRelationship != originalGuardian.relationship) newRelationship else null
         )
 
+        Log.d("EditGuardActivity", "Updating guardian with data: $updateRequest")
+
         val token = SharedPrefManager.getToken(this)
-        if (token != null && guardianId != null) {
-            apiService.updateGuardian("Bearer $token", guardianId!!, updatedGuardian).enqueue(object : Callback<Guardian> {
+        if (token != null) {
+            apiService.updateGuardian("Bearer $token", updateRequest).enqueue(object : Callback<Guardian> {
                 override fun onResponse(call: Call<Guardian>, response: Response<Guardian>) {
                     if (response.isSuccessful) {
+                        Log.d("EditGuardActivity", "Guardian updated successfully")
                         Toast.makeText(this@EditGuardActivity, "보호자 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
                         setResult(Activity.RESULT_OK)
                         finish()
                     } else {
-                        Toast.makeText(this@EditGuardActivity, "보호자 정보 수정에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        val errorBody = response.errorBody()?.string()
+                        Log.e("EditGuardActivity", "Failed to update guardian. Error: $errorBody")
+                        Toast.makeText(this@EditGuardActivity, "보호자 정보 수정에 실패했습니다. 오류: $errorBody", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Guardian>, t: Throwable) {
-                    Toast.makeText(this@EditGuardActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    Log.e("EditGuardActivity", "Network error", t)
+                    Toast.makeText(this@EditGuardActivity, "네트워크 오류가 발생했습니다: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
         } else {
-            Toast.makeText(this, "사용자 인증 정보가 없거나 유효하지 않은 보호자 ID입니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "사용자 인증 정보가 없습니다. 다시 로그인 해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
 }
