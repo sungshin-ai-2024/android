@@ -29,7 +29,7 @@
             android:id="@+id/tv_situation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위험상황"
+            android:text="@{info.situation}"
             android:fontFamily="@font/suit_regular"
             android:textSize="16sp"
             android:textColor="@color/font"
