@@ -13,7 +13,7 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import android.app.Activity
-
+import android.widget.ArrayAdapter
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
@@ -99,10 +99,6 @@ class SettingActivity : AppCompatActivity() {
         binding.settTxtEditPersdata.setOnClickListener { // 개인정보수정 클릭 시
             val intent = Intent(this, EditInfoActivity::class.java)
             editProfileLauncher.launch(intent)
-        }
-        binding.settTxtEditGuard.setOnClickListener { // 보호자정보수정 클릭 시
-            val intent = Intent(this, EditGuardActivity::class.java)
-            startActivity(intent)
         }
         binding.settTxtDelAccnt.setOnClickListener { // 회원탈퇴 클릭 시
             val intent = Intent(this, DelAcctActivity::class.java)

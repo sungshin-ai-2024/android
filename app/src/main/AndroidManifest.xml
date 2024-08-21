@@ -33,7 +33,7 @@
         <activity android:name=".GraphStressActivity" android:exported="false"/>
         <activity android:name=".ThreatActivity" android:exported="false"/>
         <activity android:name=".SettingActivity" android:exported="false"/>
-        <activity android:name=".AddGuardActivity" android:exported="false"/>
+        <activity android:name=".AddGuardActivity" />
         <activity android:name=".MainActivity" android:exported="false"/>
 
         <activity android:name=".Login1Activity" android:exported="true"/>

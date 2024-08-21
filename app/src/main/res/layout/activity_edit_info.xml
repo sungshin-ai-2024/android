@@ -125,6 +125,8 @@
                         app:layout_constraintTop_toTopOf="@id/profl_box1_name"/>
                     <EditText
                         android:id="@+id/box_name"
+                        android:textColorHint="@color/gray2"
+
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/box_sub2"
@@ -172,14 +174,12 @@
                         android:background="@drawable/box_sub2"
                         android:layout_marginTop="6dp"
                         android:fontFamily="@font/suit_semibold"
-                        android:textColor="@color/font"
+                        android:textColor="@color/gray2"
                         android:textSize="16sp"
                         android:gravity="center_vertical"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:focusable="false"
-                        android:clickable="false"
-                        android:textIsSelectable="false"
+                        android:enabled="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/profl_txt_id"/>
@@ -213,6 +213,8 @@
                         app:layout_constraintTop_toTopOf="@id/profl_box3_phone"/>
                     <EditText
                         android:id="@+id/box_phone"
+                        android:textColorHint="@color/gray2"
+
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/box_sub2"
@@ -468,6 +470,8 @@
 
                     <EditText
                         android:id="@+id/box3_adrss"
+                        android:textColorHint="@color/gray2"
+
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/box_sub2"

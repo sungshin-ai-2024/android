@@ -110,6 +110,7 @@
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profl_box1_name"/>
+                <!-- 이름 입력 부분 -->
                 <EditText
                     android:id="@+id/box_name"
                     android:layout_width="match_parent"
@@ -117,9 +118,12 @@
                     android:background="@drawable/box_sub2"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="김수정"
+                    android:hint="이름"
                     android:textColor="@color/font"
+                    android:textColorHint="@color/gray2"
                     android:textSize="16sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profl_txt_name"/>
@@ -150,17 +154,18 @@
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profl_box2_id"/>
+                <!-- 관계 선택 Spinner -->
                 <Spinner
                     android:id="@+id/spinner_relationship"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:entries="@array/relationship_array"
                     android:background="@drawable/box_sub2"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="자녀"
                     android:textColor="@color/font"
                     android:textSize="16sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profl_txt_id"/>
@@ -193,6 +198,7 @@
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profl_box3_phone"/>
+                <!-- 연락처 입력 부분 -->
                 <EditText
                     android:id="@+id/box_phone"
                     android:layout_width="match_parent"
@@ -200,9 +206,13 @@
                     android:background="@drawable/box_sub2"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="010-1234-5678"
+                    android:hint="연락처"
                     android:textColor="@color/font"
+                    android:textColorHint="@color/gray2"
                     android:textSize="16sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:inputType="phone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profl_txt_phone"/>
