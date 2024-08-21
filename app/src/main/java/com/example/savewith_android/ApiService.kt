@@ -112,5 +112,8 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body guardian: GuardianUpdateRequest
     ): Call<Guardian>
+    @DELETE("api/delete-account/")
+    fun deleteAccount(@Header("Authorization") token: String): Call<Void>
+
 }
 
