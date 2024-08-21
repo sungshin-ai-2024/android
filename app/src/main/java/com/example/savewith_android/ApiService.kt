@@ -9,6 +9,7 @@ import retrofit2.http.Header
 import retrofit2.http.PUT
 import retrofit2.http.PATCH
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 data class Profile(
     val signup_id: String,
@@ -87,15 +88,18 @@ interface ApiService {
     @GET("api/guardians/")
     fun getGuardians(@Header("Authorization") token: String): Call<List<Guardian>>
 
-    @POST("api/guardians/")
-    fun addGuardian(@Header("Authorization") token: String, @Body guardian: Guardian): Call<Guardian>
-
-
-    @DELETE("api/guardians/{id}/")
+    @DELETE("api/guardians/delete/")
     fun deleteGuardian(
         @Header("Authorization") token: String,
-        @Path("id") id: Int
+        @Query("name") name: String,
+        @Query("phone_number") phoneNumber: String
     ): Call<Void>
+
+    @POST("api/guardians/add/")
+    fun addGuardian(
+        @Header("Authorization") token: String,
+        @Body guardian: Guardian
+    ): Call<Guardian>
 
     @GET("api/guardians/{guardianId}/")
     fun getGuardian(@Header("Authorization") token: String, @Path("guardianId") guardianId: Int): Call<Guardian>
