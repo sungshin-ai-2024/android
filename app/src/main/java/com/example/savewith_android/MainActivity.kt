@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val lineChart: LineChart = binding.mainGraphAll
+        val token = intent.getStringExtra("TOKEN")
+        val userName = intent.getStringExtra("USER_NAME") ?: "Unknown"
+        val userPhone = intent.getStringExtra("USER_PHONE") ?: "Unknown"
+
         configureChartAppearance(lineChart)
 
         currentDate = LocalDate.now()
@@ -139,8 +143,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnSetting.setOnClickListener {
             // 설정 페이지로 이동
             val intent = Intent(this, SettingActivity::class.java)
+            intent.putExtra("USER_NAME", userName)
+            intent.putExtra("USER_PHONE", userPhone)
             startActivity(intent)
         }
+
         // 시간 업데이트
         val timerTask = object : TimerTask() {
             override fun run() {
@@ -154,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         timer.schedule(timerTask, 0, 1000)
 
     }
+
     private fun updateTime() {
         val dateFormat = SimpleDateFormat("M월 d일", Locale.getDefault())
         val currentdate = dateFormat.format(Date())
