@@ -1,5 +1,6 @@
 package com.example.savewith_android
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ class DayAdapter (private var items: List<EventLogInfo>) : RecyclerView.Adapter<
 
     override fun getItemCount(): Int = items.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: List<EventLogInfo>) {
         items = newItems
         notifyDataSetChanged()

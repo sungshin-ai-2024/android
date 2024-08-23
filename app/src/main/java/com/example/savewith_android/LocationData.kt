@@ -1,5 +1,6 @@
 package com.example.savewith_android
 
+import android.location.Location
 import com.github.mikephil.charting.data.LineData
 import java.time.LocalDateTime
 
@@ -21,8 +22,8 @@ data class HrData(
 )
 
 data class StressData(
-    val state: String,
-    val timestamp: LocalDateTime
+    val timestamp: LocalDateTime,
+    val stressLevel: StressLevel
 )
 
 data class BpData(
@@ -32,13 +33,16 @@ data class BpData(
 )
 
 data class DayEventData(
+    val timestamp: LocalDateTime,
     val event: String,
-    val timestamp: LocalDateTime
+    val prediction: Float,
+    val fallDetected: Float
 )
 
 data class ThreatCount(
-    val type: String,
-    val count: Int
+    val countFall: Int,
+    val countDanger: Int,
+    val countWay: Int
 )
 
 data class ThreatLog(
@@ -52,3 +56,24 @@ data class Contact(
 )
 
 data class BpChartData(val date: String, val chartData: LineData)
+
+val locationList = mutableListOf<Location>()
+
+object WebSocketDataManager {
+    var xTestTwelveSec: List<Any?>? = emptyList()
+    var predictions: List<Any?>? = emptyList()
+    var ppgData: List<Float>? = emptyList()
+    var accPredictions: List<Any?>? = emptyList()
+    var accData: List<Any?>? = emptyList()
+    var svmAccData: List<Any?>? = emptyList()
+    var bpm: Int = 0
+    var step: Int = 0
+
+    fun updateData(data: Map<String, Any?>) {
+        xTestTwelveSec = data["x_test_twelve_sec"] as? List<Any?>
+        predictions = data["predictions"] as? List<Float>
+        ppgData = data["ppg_data"] as? List<Float>
+        accPredictions = data["acc_predictions"] as? List<Any?>
+        accData = data["acc_data"] as? List<Any?>
+        svmAccData = data["svm_acc_data"] as? List<Any?>
+}}

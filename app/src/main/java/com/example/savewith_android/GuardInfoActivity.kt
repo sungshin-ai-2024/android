@@ -16,7 +16,6 @@ interface GuardianActionListener {
     fun onEditGuardian(guardian: Guardian)
     fun onDeleteGuardian(guardian: Guardian)
 }
-
 class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
     private lateinit var binding: ActivityGuardianInfoBinding
     private lateinit var guardianAdapter: GuardianAdapter
@@ -35,6 +34,7 @@ class GuardInfoActivity : AppCompatActivity(), GuardianActionListener {
 
         loadGuardians()
     }
+
 
     private fun setupRecyclerView() {
         guardianAdapter = GuardianAdapter(this)
