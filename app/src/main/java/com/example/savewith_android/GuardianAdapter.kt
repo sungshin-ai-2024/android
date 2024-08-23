@@ -1,5 +1,6 @@
 package com.example.savewith_android
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,18 +14,23 @@ class GuardianAdapter(private val listener: GuardianActionListener) :
     inner class GuardianViewHolder(private val binding: ItemGuardianBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(guardian: Guardian, position: Int) {
+        fun bind(guardian: Guardian) {
             binding.textGuardianName.text = guardian.name
             binding.textGuardianRelationship.text = guardian.relationship
             binding.textGuardianContact.text = guardian.phone_number
 
             binding.btnEdit.setOnClickListener {
-                listener.onEditGuardian(guardian.copy(id = position + 1))
+                Log.d("GuardianAdapter", "Edit button clicked for guardian: ${guardian.name}")
+                listener.onEditGuardian(guardian)
             }
 
             binding.btnDel.setOnClickListener {
-                listener.onDeleteGuardian(guardian.copy(id = position + 1))
+                Log.d("GuardianAdapter", "Delete button clicked for guardian: ${guardian.name}")
+                listener.onDeleteGuardian(guardian)
             }
+
+            binding.btnEdit.isClickable = true
+            binding.btnDel.isClickable = true
         }
     }
 
@@ -34,7 +40,7 @@ class GuardianAdapter(private val listener: GuardianActionListener) :
     }
 
     override fun onBindViewHolder(holder: GuardianViewHolder, position: Int) {
-        holder.bind(guardians[position], position)
+        holder.bind(guardians[position])
     }
 
     override fun getItemCount(): Int = guardians.size
