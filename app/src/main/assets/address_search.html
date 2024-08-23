@@ -2,85 +2,100 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>주소 검색</title>
-    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
-        #layer {
-            display: none;
-            position: fixed;
-            overflow: hidden;
-            z-index: 1;
-            -webkit-overflow-scrolling: touch;
+        body, html {
+            margin: 0;
+            padding: 0;
             height: 100%;
-            width: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: none;
-            background-color: white; /* 배경색 추가 */
-        }
-        .btn_close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background: #f8f8f8;
-            border: none;
-            font-size: 20px;
-            line-height: 30px;
-            text-align: center;
-            border-radius: 50%;
-            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-            z-index: 2; /* 닫기 버튼이 다른 요소들 위에 표시되도록 설정 */
-        }
-        #searchContainer {
-            position: absolute;
-            top: 50px;
-            width: 100%;
-            height: calc(100% - 50px);
             overflow: hidden;
+        }
+        #addressFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
-<div id="layer">
-    <button id="btnCloseLayer" class="btn_close" onclick="closeDaumPostcode()">X</button>
-    <div id="searchContainer"></div>
-</div>
+<iframe id="addressFrame" src="about:blank"></iframe>
 
 <script>
-    function execDaumPostcode() {
-        var element_layer = document.getElementById('layer');
-        var searchContainer = document.getElementById('searchContainer');
+    function loadDaumPostcode() {
+        var frame = document.getElementById('addressFrame');
+        var frameWindow = frame.contentWindow;
 
-        new daum.Postcode({
-            oncomplete: function(data) {
-                console.log('주소 선택됨: ', data); // 디버깅용 로그
-                // 주소 선택 시, 앱에 결과 전달
-                window.android.setAddress(data.zonecode, data.address, data.buildingName);
-                element_layer.style.display = 'none';
-            },
-            onresize: function(size) {
-                searchContainer.style.height = size.height + 'px';
-            },
-            width: '100%',
-            height: '100%'
-        }).embed(searchContainer);
+        frameWindow.document.write(`
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+                <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"><\/script>
+                <style>
+                    body, html { margin: 0; padding: 0; height: 100%; }
+                    #header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 50px;
+                        background-color: #f8f8f8;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        z-index: 1000;
+                    }
+                    #closeBtn {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        background-color: transparent;
+                        border: none;
+                        font-size: 24px;
+                        cursor: pointer;
+                    }
+                    #layer {
+                        position: absolute;
+                        top: 50px;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="header">
+                    주소 검색
+                    <button id="closeBtn" onclick="window.parent.closeAddressSearch()">×</button>
+                </div>
+                <div id="layer"></div>
+            </body>
+            </html>
+        `);
 
-        element_layer.style.display = 'block';
+        frameWindow.document.close();
+
+        frameWindow.onload = function() {
+            new frameWindow.daum.Postcode({
+                oncomplete: function(data) {
+                    console.log('주소 선택됨: ', data);
+                    window.android.setAddress(data.zonecode, data.address, data.buildingName);
+                    frame.src = 'about:blank';
+                },
+                width: '100%',
+                height: '100%'
+            }).embed(frameWindow.document.getElementById('layer'));
+        };
     }
 
-    function closeDaumPostcode() {
-        var element_layer = document.getElementById('layer');
-        element_layer.style.display = 'none';
+    function closeAddressSearch() {
+        document.getElementById('addressFrame').src = 'about:blank';
         window.android.closeAddressSearch();
     }
 
-    // 페이지가 로드되면 자동으로 주소 검색 실행
-    window.onload = execDaumPostcode;
+    window.onload = loadDaumPostcode;
 </script>
 </body>
 </html>
