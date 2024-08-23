@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/v1_main"
         app:layout_constraintVertical_bias="0.0"
-        android:background="F5F5F5"
+        android:background="#F5F5F5"
         android:contentDescription="설정 스크롤">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -82,7 +82,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/graph_stress"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="200dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/graph_right"
             android:layout_marginTop="15dp"
@@ -95,7 +95,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/graph_stress"
             android:layout_marginTop="55dp"
-            tools:listitem="@layout/item_describe_stress"/>
+            tools:listitem="@layout/item_describe_stress"
+            android:scrollbarFadeDuration="0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

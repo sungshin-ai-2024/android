@@ -1,32 +1,38 @@
 package com.example.savewith_android
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savewith_android.databinding.ItemThreatContactorBinding
 
-class ThreatContactAdapter(private val context: Context, private var items: List<Contact>) : RecyclerView.Adapter<ThreatContactAdapter.ViewHolder>() {
+class ThreatContactAdapter(private val context: Context, private var items: List<GuardianInfo>) : RecyclerView.Adapter<ThreatContactAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemThreatContactorBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(contact: Contact) {
-            binding.tvName.text = contact.name
-            binding.tvNumber.text = contact.phoneNumber
+        fun bind(info: GuardianInfo) {
+            binding.info = info
+            binding.executePendingBindings()
 
             binding.tvThreatCall.setOnClickListener {
                 // 전화 걸기 인텐트 실행
                 val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:${contact.phoneNumber}")
+                intent.data = Uri.parse("tel:${info.phoneNumber}")
                 context.startActivity(intent)
             }
 
             binding.tvThreatText.setOnClickListener {
                 // 문자 보내기 인텐트 실행
                 val intent = Intent(Intent.ACTION_SENDTO)
-                intent.data = Uri.parse("smsto:${contact.phoneNumber}")
-                intent.putExtra("sms_body", "문자 내용을 입력하세요")
+                intent.data = Uri.parse("smsto:${info.phoneNumber}")
+                context.startActivity(intent)
+            }
+
+            binding.tvContactorModify.setOnClickListener {
+                val intent = Intent(context, EditGuardActivity::class.java)
                 context.startActivity(intent)
             }
         }
@@ -44,7 +50,8 @@ class ThreatContactAdapter(private val context: Context, private var items: List
 
     override fun getItemCount(): Int = items.size
 
-    fun updateItems(newItems: List<Contact>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(newItems: List<GuardianInfo>) {
         items = newItems
         notifyDataSetChanged()
     }
