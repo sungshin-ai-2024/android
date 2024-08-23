@@ -63,6 +63,10 @@ class SignUpActivity : AppCompatActivity() {
             }
             val birthDate = binding.boxBirth.text.toString()
 
+            if (!validateInputs(name, userId, password, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)) {
+                return@setOnClickListener
+            }
+
             val profile = Profile(userId, password, name, phoneNumber, birthDate, gender, zipcode, address, detailedAddress)
             val signUpRequest = SignUpRequest(userId, password, profile)
 
@@ -72,6 +76,49 @@ class SignUpActivity : AppCompatActivity() {
         binding.adrssBtn.setOnClickListener {
             showAddressSearch()
         }
+    }
+
+    private fun validateInputs(name: String, userId: String, password: String, phoneNumber: String,
+                               birthDate: String, gender: String, zipcode: String, address: String, detailedAddress: String): Boolean {
+        if (name.isEmpty() || userId.isEmpty() || password.isEmpty() || phoneNumber.isEmpty() ||
+            birthDate.isEmpty() || gender.isEmpty() || zipcode.isEmpty() || address.isEmpty()) {
+            showToast("모든 필드를 입력해주세요.")
+            return false
+        }
+
+        if (!isValidName(name)) {
+            showToast("이름에는 한글과 영문만 사용할 수 있습니다.")
+            return false
+        }
+
+        if (!isValidPassword(password)) {
+            showToast("비밀번호는 최소 8자리이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.")
+            return false
+        }
+
+        if (!isValidInput(userId) || !isValidInput(phoneNumber) || !isValidInput(zipcode) ) {
+            showToast("입력 필드에 특수문자나 줄바꿈을 포함할 수 없습니다.")
+            return false
+        }
+
+        return true
+    }
+
+    private fun isValidName(name: String): Boolean {
+        return name.matches(Regex("^[가-힣a-zA-Z]+$"))
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        val passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$".toRegex()
+        return passwordRegex.matches(password)
+    }
+
+    private fun isValidInput(input: String): Boolean {
+        return input.matches(Regex("^[가-힣a-zA-Z0-9\\s]+$"))
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun signUp(signUpRequest: SignUpRequest) {
@@ -123,7 +170,7 @@ class SignUpActivity : AppCompatActivity() {
         webView.settings.domStorageEnabled = true
         webView.settings.setSupportMultipleWindows(true)
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.allowUniversalAccessFromFileURLs = true // 추가된 설정
+        webView.settings.allowUniversalAccessFromFileURLs = true
         webView.webChromeClient = WebChromeClient()
         webView.webViewClient = WebViewClient()
         webView.addJavascriptInterface(AndroidBridge(), "android")
@@ -134,7 +181,7 @@ class SignUpActivity : AppCompatActivity() {
     inner class AndroidBridge {
         @JavascriptInterface
         fun setAddress(zonecode: String, address: String, buildingName: String) {
-            Log.d("SignUpActivity", "주소 선택됨: $zonecode, $address, $buildingName") // 디버깅용 로그
+            Log.d("SignUpActivity", "주소 선택됨: $zonecode, $address, $buildingName")
             runOnUiThread {
                 binding.adrssBox1.text = zonecode
                 binding.adrssBox2.text = address
