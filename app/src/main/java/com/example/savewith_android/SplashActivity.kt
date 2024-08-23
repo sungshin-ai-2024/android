@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         // 일정 시간이 지난 후 MainActivity로 전환
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Login2Activity::class.java)
             startActivity(intent)
             finish()  // 스플래시 화면을 종료하여 뒤로 가기 버튼을 누를 때 다시 나타나지 않도록 합니다.
         }, 2000)  // 3초 후에 MainActivity로 전환
