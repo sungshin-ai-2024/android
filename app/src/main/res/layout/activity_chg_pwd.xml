@@ -70,7 +70,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/box_sub2"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="현재 비밀번호"
+                    android:hint="현재 비밀번호"
                     android:textColor="@color/gray2"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/box_sub2"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="새 비밀번호"
+                    android:hint="새 비밀번호"
                     android:textColor="@color/gray2"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,12 +96,13 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/box_sub2"
                     android:fontFamily="@font/suit_semibold"
-                    android:text="새 비밀번호 확인"
+                    android:hint="새 비밀번호 확인"
                     android:textColor="@color/gray2"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/box_new_pwd"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
@@ -175,6 +176,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
